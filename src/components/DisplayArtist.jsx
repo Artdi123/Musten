@@ -1,0 +1,341 @@
+// ... (existing imports)
+import React, { useContext, useCallback, useState, useEffect } from "react";
+import Navbar from "./Navbar";
+import { useParams } from "react-router-dom";
+import { assets, artistData, songsData } from "../assets/assets";
+import { PlayerContext } from "../context/PlayerContext";
+
+const DisplayArtist = () => {
+  const { id } = useParams();
+  const artistInfo = artistData.find((artist) => artist.id.toString() === id);
+  const {
+    track,
+    playStatus,
+    play,
+    pause,
+    playWithId,
+    isShuffleOn,
+    toggleShuffle,
+    setCurrentPlaylist,
+    setGlobalSearchQuery,
+  } = useContext(PlayerContext);
+
+  const [isPlayingArtist, setIsPlayingArtist] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [filteredSongs, setFilteredSongs] = useState([]);
+  const [showSortOptions, setShowSortOptions] = useState(false);
+  const [sortBy, setSortBy] = useState("default");
+
+  useEffect(() => {
+    setGlobalSearchQuery("");
+  }, [id, setGlobalSearchQuery]);
+
+  const artistSongs = React.useMemo(() => {
+    if (!artistInfo) return [];
+    return songsData.filter(
+      (song) =>
+        song.artist &&
+        song.artist.split(",").some((a) => a.trim() === artistInfo.name)
+    );
+  }, [artistInfo]);
+
+  const sortSongs = useCallback(
+    (songs) => {
+      switch (sortBy) {
+        case "title":
+          return [...songs].sort((a, b) => a.name.localeCompare(b.name));
+        case "artist":
+          return [...songs].sort((a, b) => {
+            const artistA = a.artist || "";
+            const artistB = b.artist || "";
+            return artistA.localeCompare(artistB);
+          });
+        default:
+          return songs;
+      }
+    },
+    [sortBy]
+  );
+
+  useEffect(() => {
+    let result = artistSongs;
+
+    if (searchQuery.trim() !== "") {
+      result = result.filter(
+        (song) =>
+          song.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          (song.artist &&
+            song.artist.toLowerCase().includes(searchQuery.toLowerCase()))
+      );
+    }
+
+    result = sortSongs(result);
+
+    setFilteredSongs(result);
+  }, [searchQuery, artistSongs, sortBy, sortSongs]);
+
+  const calculateTotalDuration = () => {
+    let totalSeconds = 0;
+    const songsToCalculate = searchQuery
+      ? filteredSongs
+      : sortSongs(artistSongs);
+
+    songsToCalculate.forEach((song) => {
+      const [minutes, seconds] = song.duration.split(":").map(Number);
+      totalSeconds += minutes * 60 + seconds;
+    });
+
+    const hours = Math.floor(totalSeconds / 3600);
+    const remainingMinutes = Math.floor((totalSeconds % 3600) / 60);
+
+    if (hours > 0) {
+      return `${hours} hr ${remainingMinutes} min`;
+    }
+    return `${remainingMinutes} min`;
+  };
+
+  const togglePlayPause = useCallback(() => {
+    const songsToUse = searchQuery ? filteredSongs : sortSongs(artistSongs);
+    if (songsToUse.length === 0) return;
+
+    if (playStatus && isPlayingArtist) {
+      pause();
+      setIsPlayingArtist(false);
+    } else {
+      setCurrentPlaylist(songsToUse);
+      if (!songsToUse.some((song) => song.id === track?.id)) {
+        playWithId(songsToUse[0].id, songsToUse, null);
+      } else {
+        play();
+      }
+      setIsPlayingArtist(true);
+    }
+  }, [
+    artistSongs,
+    playStatus,
+    isPlayingArtist,
+    track,
+    play,
+    pause,
+    playWithId,
+    filteredSongs,
+    searchQuery,
+    setCurrentPlaylist,
+    sortSongs,
+  ]);
+
+  useEffect(() => {
+    const songsToUse = searchQuery ? filteredSongs : sortSongs(artistSongs);
+    setCurrentPlaylist(songsToUse);
+  }, [
+    artistSongs,
+    filteredSongs,
+    searchQuery,
+    setCurrentPlaylist,
+    sortBy,
+    sortSongs,
+  ]);
+
+  const toggleSortOptions = () => {
+    setShowSortOptions(!showSortOptions);
+  };
+
+  const handleSort = (type) => {
+    setSortBy(type);
+    setShowSortOptions(false);
+  };
+
+  if (!artistInfo) {
+    return (
+      <>
+        <Navbar />
+        <div className="text-white text-center py-10">Artist not found.</div>
+      </>
+    );
+  }
+
+  return (
+    <>
+      <Navbar />
+      <div className="mt-10 flex gap-8 flex-col md:flex-row md:items-end">
+        <img
+          className="w-48 h-48 rounded-full object-cover"
+          src={artistInfo.profile}
+          alt={artistInfo.name}
+        />
+        <div className="flex flex-col">
+          <p> Artist </p>
+          <h2 className="text-5xl font-bold mb-4 md:text-7xl">
+            {artistInfo.name}
+          </h2>
+          <h4>{artistInfo.Listener}</h4>
+          <p className="mt-3">
+            <b className="font-normal">
+              {" "}
+              • <b></b>
+              {
+                (searchQuery ? filteredSongs : sortSongs(artistSongs)).length
+              }{" "}
+              Songs,{" "}
+            </b>
+            {calculateTotalDuration()}
+          </p>
+        </div>
+      </div>
+      <div className="flex justify-between items-center mt-6">
+        <div className="flex items-center gap-4">
+          <button
+            onClick={togglePlayPause}
+            className="bg-blue-500 hover:bg-blue-600 text-white rounded-full px-3 py-3 flex items-center gap-2"
+          >
+            {playStatus && isPlayingArtist ? (
+              <img
+                src={assets.pause_icon}
+                className="w-5 h-5"
+                alt="Pause"
+                title="Pause"
+              />
+            ) : (
+              <img
+                src={assets.play_icon}
+                className="w-5 h-5"
+                alt="Play"
+                title="Play"
+              />
+            )}
+          </button>
+          <button
+            onClick={() =>
+              toggleShuffle(
+                searchQuery ? filteredSongs : sortSongs(artistSongs)
+              )
+            }
+            className={`bg-transparent border border-gray-500 hover:border-white text-white rounded-full px-3 py-3 flex items-center gap-2 cursor-pointer sm:px-6 ${
+              isShuffleOn ? "opacity-100" : "opacity-50"
+            }`}
+            title={isShuffleOn ? "Shuffle is on" : "Shuffle is off"}
+          >
+            <img className="w-5" src={assets.shuffle_icon} alt="Shuffle" />
+            <span className="font-bold hidden sm:block">Shuffle</span>
+          </button>
+        </div>
+
+        <div className="flex items-center gap-4">
+          <div className="relative">
+            <input
+              type="text"
+              placeholder="Search in artist's songs..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="bg-[#ffffff26] text-white rounded-full pl-4 pr-10 py-2 focus:outline-none w-48 md:w-64"
+            />
+            <img
+              src={assets.search_icon}
+              className="w-5 h-5 absolute right-3 top-2.5 flex"
+              alt="Search"
+            />
+          </div>
+          <div className="relative">
+            <button
+              onClick={toggleSortOptions}
+              className="text-gray-400 hover:text-white p-2 relative"
+            >
+              <img
+                src={assets.list_icon}
+                className="w-5 h-5"
+                alt="Sort"
+                title="Sort options"
+              />
+            </button>
+            {showSortOptions && (
+              <div className="absolute right-0 mt-2 w-48 bg-[#282828] rounded shadow-lg z-10">
+                <div className="py-1">
+                  <button
+                    onClick={() => handleSort("default")}
+                    className={`block w-full text-left px-4 py-2 text-sm hover:bg-[#383838] ${
+                      sortBy === "default" ? "text-blue-500" : "text-white"
+                    }`}
+                  >
+                    Default order
+                  </button>
+                  <button
+                    onClick={() => handleSort("title")}
+                    className={`block w-full text-left px-4 py-2 text-sm hover:bg-[#383838] ${
+                      sortBy === "title" ? "text-blue-500" : "text-white"
+                    }`}
+                  >
+                    Sort by title
+                  </button>
+                  <button
+                    onClick={() => handleSort("artist")}
+                    className={`block w-full text-left px-4 py-2 text-sm hover:bg-[#383838] ${
+                      sortBy === "artist" ? "text-blue-500" : "text-white"
+                    }`}
+                  >
+                    Sort by artist
+                  </button>
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+
+      <div className="grid grid-cols-3 sm:grid-cols-4 mt-10 mb-4 pl-2 text-[#a7a7a7]">
+        <p>
+          <b className="mr-4">#</b>Title
+        </p>
+        <p>Artist</p>
+        <p className="hidden sm:block">Date Added</p>
+        <img className="m-auto w-4" src={assets.clock_icon} alt="" />
+      </div>
+      <hr />
+      {(searchQuery ? filteredSongs : sortSongs(artistSongs)).map(
+        (item, index) => (
+          <div
+            onClick={() => playWithId(item.id, artistSongs, null)}
+            key={index}
+            className="grid grid-cols-3 sm:grid-cols-4 gap-2 p-2 items-center text-[#a7a7a7] text-sm hover:bg-[#ffffff26] cursor-pointer"
+          >
+            <div className="flex items-center">
+              <b className="mr-4 text-[#a7a7a7] w-4">{index + 1}</b>
+              <img className="w-10 h-10 mr-3 rounded" src={item.image} alt="" />
+              <div className="w-52 truncate">
+                <p className="text-white truncate">{item.name}</p>
+                <p className="text-xs text-gray-400 truncate">{item.artist}</p>
+              </div>
+            </div>
+            <p className="text-[15px]">{item.artist}</p>
+            <p className="text-[15px] hidden sm:block">5 days ago</p>
+            <p className="text-[15px] text-center">{item.duration}</p>
+          </div>
+        )
+      )}
+      {searchQuery && filteredSongs.length === 0 && (
+        <div className="text-center py-10 text-gray-400">
+          No songs found matching "{searchQuery}" by {artistInfo.name}
+        </div>
+      )}
+
+      {/* About the Artist Section */}
+      <h2 className="text-2xl font-bold mb-4 mt-10">About</h2>
+      <div className="mb-10 p-6 bg-[#1f1e1e] rounded-lg w-[900px]">
+        <div className="flex items-center mb-4">
+          <img
+            src={artistInfo.profile}
+            alt={artistInfo.name}
+            className="w-40 h-40 rounded-full object-cover mr-4"
+          />
+        </div>
+        <div>
+          <p className="text-lg font-semibold mt-2">{artistInfo.Listener}</p>
+        </div>
+        <p className="text-gray-300 leading-relaxed mt-2">
+          {artistInfo.desc || "No description available for this artist."}
+        </p>
+      </div>
+    </>
+  );
+};
+
+export default DisplayArtist;
