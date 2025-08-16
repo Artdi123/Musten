@@ -43,7 +43,7 @@ import BadApple_cover from "./Bad Apple!! feat.nomico-cover.jpg";
 import CandyCookieChocolate_cover from "./CandyCookieChocolate (feat. HATSUNE MIKU & KASANE TETO)-cover.jpeg";
 import FutureEve_cover from "./Future Eve (feat. HATSUNE MIKU)-cover.png";
 import HandinHand_cover from "./Hand in Hand-cover.jpeg";
-import IntergalacticBound_cover from "./Intergalactic Bound (feat. HATSUNE MIKU)-cover.png";
+import IntergalacticBound_cover from "./Intergalactic-Bound-Cover.png";
 import kyukurarin_cover from "./kyu-kurarin-cover.jpg";
 import MAGICALCURELOVESHOT_cover from "./M@GICAL CURE! LOVE SHOT! (feat. Hatsune Miku)-cover.jpeg";
 import BUG_cover from "./Bug-cover.jpeg";
@@ -70,7 +70,7 @@ import BadApple from "./Bad Apple!! feat.nomico.mp3";
 import CandyCookieChocolate from "./CandyCookieChocolate (feat. HATSUNE MIKU & KASANE TETO).mp3";
 import FutureEve from "./Future Eve (feat. HATSUNE MIKU).mp3";
 import HandinHand from "./Hand in Hand.mp3";
-import IntergalacticBound from "./Intergalactic Bound (feat. HATSUNE MIKU).mp3";
+import IntergalacticBound from "./Intergalactic-Bound.mp3";
 import kyukurarin from "./kyu-kurarin.mp3";
 import MAGICALCURELOVESHOT from "./M@GICAL CURE! LOVE SHOT! (feat. Hatsune Miku).mp3";
 import BUG from "./BUG.mp3";
@@ -324,7 +324,7 @@ import Hellosekaivocaloidvid from "./Hello, Sekai Vocaloid Ver vid.mp4"
 import Thefutureofbeginningvid from "./The Future of Beginning Vid.mp4"
 import sankyuuvid from "./39 (feat. Hatsune Miku) Vid.mp4"
 import StageofSekaivid from "./Stage of Sekai vid.mp4"
-import IntergalacticBoundvid from "./Intergalactic Bound (feat. Hatsune Miku) vid.mp4"
+import IntergalacticBoundvid from "./Intergalactic-Bound-Vid.mp4"
 import NEOvid from "./NEO vid.mp4"
 import GunjouSankavid from "./Gunjou Sanka Vid.mp4"
 import GunjouSankaMovievid from "./Gunjou Sanka Movie ver vid.mp4"
