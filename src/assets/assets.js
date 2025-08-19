@@ -177,6 +177,7 @@ import SokoniAru_cover from "./Soko ni Aru, Hikari-cover.jpeg";
 import Stella_cover from "./Stella-cover.jpeg";
 import Story_cover from "./SToRY-cover.jpeg";
 import Worlders_cover from "./Worlders-cover.jpeg";
+import SmileSymphony_cover from "./Smile Symphony cover.jpeg";
 
 //Project Sekai Song
 import Endmarknikiboutonamidawosoete from "./Endmarknikiboutonamidawosoete.mp3";
@@ -188,6 +189,7 @@ import SokoniAru from "./Soko ni Aru, Hikari.mp3";
 import Stella from "./Stella.mp3";
 import Story from "./SToRY.mp3";
 import Worlders from "./Worlders.mp3";
+import SmileSymphony from "./Smile Symphony.mp3";
 
 //Jpop & Others Song cover
 import Asiloveyou_cover from "./As i Love You-cover.jpg";
@@ -343,6 +345,7 @@ import Stellavid from "./Stella vid.mp4"
 import Worldersvid from "./Worlders vid.mp4"
 import Monitoringvid from "./Monitoring vid.mp4"
 import Mesmerizervid from "./Mesmerizer vid.mp4"
+import SmileSymphonyvid from "./Smile Symphony vid.mp4"
 
 import { Form } from "react-router-dom";
 import Lyrics from "../components/Lyrics";
@@ -1929,8 +1932,8 @@ export const songsData = [
     [00:08.21] Kono mama dokomade mo ochite iki
     [00:12.27] Dare nimo mitsukerarenai no kana
 
-    [00:17.56] Doko e mukai, nani o sureba?
-    [00:20.92] Futo sashi komu hitosuji no hikari
+    [00:17.56] Doko e mukai, nani o sureba?.
+    hikari
     [00:24.10] Te wo nobaseba todokisou dakedo
     [00:28.06] Nami ni sarawarete miushinatta
 
@@ -6124,6 +6127,111 @@ export const songsData = [
     artist: "Kurokotei",
     duration: "6:47",
   },
+  {
+    id: 118,
+    name: "Smile Symphony",
+    image: SmileSymphony_cover,
+    file: SmileSymphony,
+    artist: "Wonderlands x Showtime",
+    duration: "3:26",
+    lyrics: `
+      [00:01.42] Mou daijoubu sa, hagurenai you ni
+      [00:04.67] Happii no osusowake, kono yubi tomare! (Ooh-yeah!)
+      [00:09.51] (Ta ta, tarararara)
+      [00:11.55] (Ta ta, tarararara)
+      [00:13.58] (Ta ta, tarararara)
+      [00:14.93] (Tarararara ta ta ta, tararara)
+      [00:17.39] (Ta ta, tarararara)
+      [00:19.35] (Ta ta, tarararara)
+      [00:21.36] (Ta ta, tararatara)
+
+      [00:25.21] Murippoi kanji da (Zenzen sonna koto nai tte!)
+      [00:26.98] Yamechaou ka (Sutooppu chotto ochitsuite!)
+      [00:28.97] Itai kurai kanawanai kitai
+      [00:30.59] Minna ittai dou shichatta tte iu no! (Mou bai bai baaai)
+      [00:32.91] Yaruki waite konee (Aa, wakaru wakaru)
+      [00:34.80] Teka douse kawannai shi? (Gooru mo tooku natteiru you na)
+      [00:36.82] Somosomo staato dekite tan da kke
+      [00:38.09] Nanka tanoshii koto nai kana (Koko wa watashi ga nantoka suru shika nai na)
+      [00:41.16] A, yoroshiku onegai shimaasu!
+
+      [00:42.72] (Wan!) Saa, ookiku iki o suimasu
+      [00:44.73] (Tsuu!) De, yukkuri iki o hakimasu
+      [00:46.65] (Surii!) Hai, junbi kanryou desu!
+      [00:48.20] E? E? E!? Jaa, minna iku yo?
+
+      [00:50.61] Mou chotto de shippai ni
+      [00:52.44] Fujichaku shichau koto ga aru nara
+      [00:56.60] Utacchaeba ii!?
+
+      [00:57.84] Oide sumairu, sumairu, shinfonii, kimi mo issho ni
+      [01:01.72] Bokura kekkyoku naita kono kao de waraeru jan, wandafoo
+      [01:06.47] Mou daijoubu sa, hagurenai you ni
+      [01:09.51] Happii no osusowake, kono yubi tomare! (Na-na-na-na)
+
+      [01:13.83] Moshimo kanawanakattara dou shiyou
+      [01:15.83] Boku ni negatibu akuma tori tsuita!
+      [01:17.84] Kimi ga dore dake ochikonde itemo
+      [01:19.81] Boku wa kimi o shinjiru mon
+      [01:21.64] "Honto dame dame dame dame, mou muri"
+      [01:23.78] Boku no pojitibu tenshi oyasumi chuu?
+      [01:25.70] Kimi wa zen(zen)zen(zen) dame janai
+      [01:27.78] Kimi mo boku o shinjite ne iesu!
+
+      [01:30.18] Iyaa, minna yareba dekiru jan
+      [01:31.95] Un, un, jaa goukaku tte koto de!
+      [01:33.24] Nanka katte ni hanashi susunderu n dakedo
+      [01:34.49] Maa, demo tanoshiku wa atta yo na...?
+      [01:36.04] Homerareru no mo warukunai tsuuka
+      [01:37.81] Nee, nee, kondo wa kocchi kara shikakete minai?
+      [01:39.69] O, ii ne, sansei, de, nani suru nani suru?
+      [01:41.85] Sakki no uta to dansu, kanpeki ni yattara odoroku n ja ne?
+      [01:43.92] Sore da sore da! Jaa renshuu to ikimasu ka!
+      [01:45.72] Moo, minna, kosokoso nani shiteru no
+      [01:47.54] Nan demo nai nan demo nai, ki shinakute ii kara!
+      [01:49.68] Fuu, abunai tokoro datta ne
+      [01:51.44] Te ka ore ra nande anna ni, heikondeta n da kke?
+      [01:54.98] Saa?
+
+      [01:55.64] (Wan!) Saa, ookiku iki o suimasu
+      [01:57.64] (Tsuu!) De, yukkuri iki o hakimasu
+      [01:59.49] (Surii!) Hai, junbi kanryou desu!
+      [02:01.29] (Okee!) Tsugi wa socchi no ban ne (E, atashi mo?)
+      [02:03.45] (Wan!) Saa, takaku janpu shite (Haaai!)
+      [02:05.34] (Tsuu!) De, rippurooru shite
+      [02:07.31] (Surii!) Kokoro no junbi shite!
+      [02:09.13] Nee, ittai nani ga hajimaru no...?
+
+      [02:11.26] Egao ni shite kureta kimi ni
+      [02:13.05] Mite hoshii mono ga aru no sa
+      [02:17.25] Okaeshi nfonii
+
+      [02:18.40] Oide sumairu, sumairu, shinfonii, boku to issho ni
+      [02:22.36] Itsuka kimi ga yumemita ano basho e, hashiridasou, wandafoo
+      [02:26.90] Mou daijoubu sa, hagurenai kara
+      [02:30.20] Happii wa koko ni aru yo, kono yubi tomaree! (Na-na-na-na)
+
+      [02:34.46] "Moshimo kanawanakattara, dou shiyou"
+      [02:36.58] Kimi no negatibu akuma yattsukero!
+      [02:38.67] Boku no egao de kimi wa hareru no da
+      [02:40.42] Nando demo susumeru no da
+      [02:42.42] "Honto dame dame dame dame, mou muri"
+      [02:44.47] Kimi no pojitibu tenshi wa boku da mon
+      [02:46.36] Kimi wa zen(zen)zen(zen) dame janai
+      [02:48.34] Kimi mo boku o shinjite ne
+      [02:50.36] Kimi wa zenzen dame janai
+      [02:56.71] Boku wa kimi o shinjiteru, iesu!
+
+      [02:59.36] Yahhoo, kawareru yo
+      [03:01.28] Yahhoo, waraeru yo
+      [03:03.26] Yahhoo, susumeru yo
+      [03:04.65] Kimi wa nante ttatte hora, wandafoo
+      [03:07.23] Yahhoo, todokeru yo
+      [03:09.14] Yahhoo, kanaeru yo
+      [03:11.10] Yahhoo, oide shinfonii
+      [03:14.48]
+    `
+  },
 ];
 
 export const projectsekaiSongs = [
@@ -6325,6 +6433,111 @@ export const projectsekaiSongs = [
     [03:54.45] Hashire sono hohaba de hashire koe todorokasete kure
     [03:59.02] Kitai to fuan o onaji kurai dakishimete
     [04:04.37] Kimi to ima o tsumugu mirai terashite
+    `,
+  },
+  {
+    id: 118,
+    name: "Smile Symphony",
+    image: SmileSymphony_cover,
+    file: SmileSymphony,
+    artist: "Wonderlands x Showtime",
+    duration: "3:26",
+    lyrics: `
+      [00:01.42] Mou daijoubu sa, hagurenai you ni
+      [00:04.67] Happii no osusowake, kono yubi tomare! (Ooh-yeah!)
+      [00:09.51] (Ta ta, tarararara)
+      [00:11.55] (Ta ta, tarararara)
+      [00:13.58] (Ta ta, tarararara)
+      [00:14.93] (Tarararara ta ta ta, tararara)
+      [00:17.39] (Ta ta, tarararara)
+      [00:19.35] (Ta ta, tarararara)
+      [00:21.36] (Ta ta, tararatara)
+
+      [00:25.21] Murippoi kanji da (Zenzen sonna koto nai tte!)
+      [00:26.98] Yamechaou ka (Sutooppu chotto ochitsuite!)
+      [00:28.97] Itai kurai kanawanai kitai
+      [00:30.59] Minna ittai dou shichatta tte iu no! (Mou bai bai baaai)
+      [00:32.91] Yaruki waite konee (Aa, wakaru wakaru)
+      [00:34.80] Teka douse kawannai shi? (Gooru mo tooku natteiru you na)
+      [00:36.82] Somosomo staato dekite tan da kke
+      [00:38.09] Nanka tanoshii koto nai kana (Koko wa watashi ga nantoka suru shika nai na)
+      [00:41.16] A, yoroshiku onegai shimaasu!
+
+      [00:42.72] (Wan!) Saa, ookiku iki o suimasu
+      [00:44.73] (Tsuu!) De, yukkuri iki o hakimasu
+      [00:46.65] (Surii!) Hai, junbi kanryou desu!
+      [00:48.20] E? E? E!? Jaa, minna iku yo?
+
+      [00:50.61] Mou chotto de shippai ni
+      [00:52.44] Fujichaku shichau koto ga aru nara
+      [00:56.60] Utacchaeba ii!?
+
+      [00:57.84] Oide sumairu, sumairu, shinfonii, kimi mo issho ni
+      [01:01.72] Bokura kekkyoku naita kono kao de waraeru jan, wandafoo
+      [01:06.47] Mou daijoubu sa, hagurenai you ni
+      [01:09.51] Happii no osusowake, kono yubi tomare! (Na-na-na-na)
+
+      [01:13.83] Moshimo kanawanakattara dou shiyou
+      [01:15.83] Boku ni negatibu akuma tori tsuita!
+      [01:17.84] Kimi ga dore dake ochikonde itemo
+      [01:19.81] Boku wa kimi o shinjiru mon
+      [01:21.64] "Honto dame dame dame dame, mou muri"
+      [01:23.78] Boku no pojitibu tenshi oyasumi chuu?
+      [01:25.70] Kimi wa zen(zen)zen(zen) dame janai
+      [01:27.78] Kimi mo boku o shinjite ne iesu!
+
+      [01:30.18] Iyaa, minna yareba dekiru jan
+      [01:31.95] Un, un, jaa goukaku tte koto de!
+      [01:33.24] Nanka katte ni hanashi susunderu n dakedo
+      [01:34.49] Maa, demo tanoshiku wa atta yo na...?
+      [01:36.04] Homerareru no mo warukunai tsuuka
+      [01:37.81] Nee, nee, kondo wa kocchi kara shikakete minai?
+      [01:39.69] O, ii ne, sansei, de, nani suru nani suru?
+      [01:41.85] Sakki no uta to dansu, kanpeki ni yattara odoroku n ja ne?
+      [01:43.92] Sore da sore da! Jaa renshuu to ikimasu ka!
+      [01:45.72] Moo, minna, kosokoso nani shiteru no
+      [01:47.54] Nan demo nai nan demo nai, ki shinakute ii kara!
+      [01:49.68] Fuu, abunai tokoro datta ne
+      [01:51.44] Te ka ore ra nande anna ni, heikondeta n da kke?
+      [01:54.98] Saa?
+
+      [01:55.64] (Wan!) Saa, ookiku iki o suimasu
+      [01:57.64] (Tsuu!) De, yukkuri iki o hakimasu
+      [01:59.49] (Surii!) Hai, junbi kanryou desu!
+      [02:01.29] (Okee!) Tsugi wa socchi no ban ne (E, atashi mo?)
+      [02:03.45] (Wan!) Saa, takaku janpu shite (Haaai!)
+      [02:05.34] (Tsuu!) De, rippurooru shite
+      [02:07.31] (Surii!) Kokoro no junbi shite!
+      [02:09.13] Nee, ittai nani ga hajimaru no...?
+
+      [02:11.26] Egao ni shite kureta kimi ni
+      [02:13.05] Mite hoshii mono ga aru no sa
+      [02:17.25] Okaeshi nfonii
+
+      [02:18.40] Oide sumairu, sumairu, shinfonii, boku to issho ni
+      [02:22.36] Itsuka kimi ga yumemita ano basho e, hashiridasou, wandafoo
+      [02:26.90] Mou daijoubu sa, hagurenai kara
+      [02:30.20] Happii wa koko ni aru yo, kono yubi tomaree! (Na-na-na-na)
+
+      [02:34.46] "Moshimo kanawanakattara, dou shiyou"
+      [02:36.58] Kimi no negatibu akuma yattsukero!
+      [02:38.67] Boku no egao de kimi wa hareru no da
+      [02:40.42] Nando demo susumeru no da
+      [02:42.42] "Honto dame dame dame dame, mou muri"
+      [02:44.47] Kimi no pojitibu tenshi wa boku da mon
+      [02:46.36] Kimi wa zen(zen)zen(zen) dame janai
+      [02:48.34] Kimi mo boku o shinjite ne
+      [02:50.36] Kimi wa zenzen dame janai
+      [02:56.71] Boku wa kimi o shinjiteru, iesu!
+
+      [02:59.36] Yahhoo, kawareru yo
+      [03:01.28] Yahhoo, waraeru yo
+      [03:03.26] Yahhoo, susumeru yo
+      [03:04.65] Kimi wa nante ttatte hora, wandafoo
+      [03:07.23] Yahhoo, todokeru yo
+      [03:09.14] Yahhoo, kanaeru yo
+      [03:11.10] Yahhoo, oide shinfonii
+      [03:14.48]
     `,
   },
 ];
