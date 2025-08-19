@@ -324,6 +324,7 @@ import Hellosekaivocaloidvid from "./Hello, Sekai Vocaloid Ver vid.mp4"
 import Thefutureofbeginningvid from "./The Future of Beginning Vid.mp4"
 import sankyuuvid from "./39 (feat. Hatsune Miku) Vid.mp4"
 import StageofSekaivid from "./Stage of Sekai vid.mp4"
+import Shinkaisyouzyo_vid from "./Shinkaisyouzyo -deep sea girl- (feat. HATSUNE MIKU) vid.mp4"
 import IntergalacticBoundvid from "./Intergalactic-Bound-Vid.mp4"
 import NEOvid from "./NEO vid.mp4"
 import GunjouSankavid from "./Gunjou Sanka Vid.mp4"
@@ -1919,6 +1920,7 @@ export const songsData = [
     name: "Shinkaisyouzyo -deep sea girl- (feat. HATSUNE MIKU)",
     image: Shinkaisyouzyo_cover,
     file: Shinkaisyouzyo,
+    video: Shinkaisyouzyo_vid,
     artist: "Yuuyu, Hatsune Miku",
     duration: "3:42",
     lyrics: `
