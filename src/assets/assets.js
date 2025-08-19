@@ -6132,6 +6132,7 @@ export const songsData = [
     name: "Smile Symphony",
     image: SmileSymphony_cover,
     file: SmileSymphony,
+    video: SmileSymphonyvid,
     artist: "Wonderlands x Showtime",
     duration: "3:26",
     lyrics: `
@@ -6440,6 +6441,7 @@ export const projectsekaiSongs = [
     name: "Smile Symphony",
     image: SmileSymphony_cover,
     file: SmileSymphony,
+    video: SmileSymphonyvid,
     artist: "Wonderlands x Showtime",
     duration: "3:26",
     lyrics: `
