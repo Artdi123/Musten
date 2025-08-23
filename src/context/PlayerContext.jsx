@@ -32,6 +32,7 @@ const PlayerContextProvider = (props) => {
   const [currentPlaylist, setCurrentPlaylist] = useState(songsData);
   const [currentAlbumSongs, setCurrentAlbumSongs] = useState(songsData);
   const [currentAlbumId, setCurrentAlbumId] = useState(null);
+  const [originalPlaylist, setOriginalPlaylist] = useState(songsData);
   const [time, setTime] = useState({
     currentTime: {
       second: 0,
@@ -95,6 +96,7 @@ const PlayerContextProvider = (props) => {
 
   const addToQueue = (song) => {
     setCurrentPlaylist((prev) => [...prev, song]);
+    setOriginalPlaylist((prev) => [...prev, song]);
     if (isShuffleOn) {
       setShuffledPlaylist((prev) => [...prev, song]);
     }
@@ -102,6 +104,7 @@ const PlayerContextProvider = (props) => {
 
   const removeFromQueue = (songId) => {
     setCurrentPlaylist((prev) => prev.filter((s) => s.id !== songId));
+    setOriginalPlaylist((prev) => prev.filter((s) => s.id !== songId));
     if (isShuffleOn) {
       setShuffledPlaylist((prev) => prev.filter((s) => s.id !== songId));
     }
@@ -109,6 +112,7 @@ const PlayerContextProvider = (props) => {
 
   const reorderQueue = (newOrder) => {
     setCurrentPlaylist(newOrder);
+    setOriginalPlaylist(newOrder);
     if (isShuffleOn) {
       setShuffledPlaylist(newOrder);
     }
@@ -140,7 +144,9 @@ const PlayerContextProvider = (props) => {
 
   const toggleShuffle = (albumSongs = null) => {
     if (!isShuffleOn) {
-      const playlistToShuffle = albumSongs || songsData;
+      // Turn shuffle ON - save current playlist as original and create shuffled copy
+      const playlistToShuffle = albumSongs || currentPlaylist;
+      setOriginalPlaylist([...playlistToShuffle]);
       const shuffled = [...playlistToShuffle];
       for (let i = shuffled.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
@@ -149,11 +155,8 @@ const PlayerContextProvider = (props) => {
       setShuffledPlaylist(shuffled);
       setCurrentPlaylist(shuffled);
     } else {
-      setCurrentPlaylist(
-        currentAlbumSongs.length > 0 && currentAlbumId !== null
-          ? currentAlbumSongs
-          : songsData
-      );
+      // Turn shuffle OFF - restore the original playlist order
+      setCurrentPlaylist([...originalPlaylist]);
     }
     setIsShuffleOn(!isShuffleOn);
   };
@@ -186,7 +189,10 @@ const PlayerContextProvider = (props) => {
     if (albumSongs && albumId !== null) {
       setCurrentAlbumSongs(albumSongs);
       setCurrentAlbumId(albumId);
+      // Always update originalPlaylist when switching to an album
+      setOriginalPlaylist([...albumSongs]);
       if (isShuffleOn) {
+        // Create a shuffled copy of the album songs
         const shuffled = [...albumSongs];
         for (let i = shuffled.length - 1; i > 0; i--) {
           const j = Math.floor(Math.random() * (i + 1));
@@ -195,13 +201,24 @@ const PlayerContextProvider = (props) => {
         setShuffledPlaylist(shuffled);
         setCurrentPlaylist(shuffled);
       } else {
-        setCurrentPlaylist(albumSongs);
+        setCurrentPlaylist([...albumSongs]);
       }
     } else {
       setCurrentAlbumSongs(songsData);
       setCurrentAlbumId(null);
-      if (!isShuffleOn) {
-        setCurrentPlaylist(songsData);
+      // Always update originalPlaylist when switching to main playlist
+      setOriginalPlaylist([...songsData]);
+      if (isShuffleOn) {
+        // Create a shuffled copy of the main songs
+        const shuffled = [...songsData];
+        for (let i = shuffled.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+        }
+        setShuffledPlaylist(shuffled);
+        setCurrentPlaylist(shuffled);
+      } else {
+        setCurrentPlaylist([...songsData]);
       }
     }
     setPlayStatus(true);
@@ -322,6 +339,7 @@ const PlayerContextProvider = (props) => {
     setGlobalSearchQuery,
     userData, // Expose userData
     setUserData, // Expose setUserData for updating
+    originalPlaylist, // Expose originalPlaylist for debugging/access
   };
 
   return (
