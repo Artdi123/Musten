@@ -38,31 +38,43 @@ const View = () => {
     );
   };
 
+  // Function to determine which album a song actually belongs to
+  const getSongAlbum = (song) => {
+    if (song.album) {
+      return song.album;
+    }
+    
+    // Check if song has "Hatsune Miku" as a singer
+    if (song.singer && song.singer.includes("Hatsune Miku")) {
+      return "Hatsune Miku Album";
+    }
+    
+    // Check if song has "Hatsune Miku" in the artist field
+    if (song.artist && song.artist.includes("Hatsune Miku")) {
+      return "Hatsune Miku Album";
+    }
+    
+    if (song.artist === "Camellia") {
+      return "Camellia Album";
+    } else if (projectsekaiSongs.some(ps => ps.id === song.id)) {
+      return "Project Sekai Song Album";
+    } else if (jpopSongs.some(js => js.id === song.id)) {
+      return "Jpop & Other Album";
+    } else {
+      return "Liked Song";
+    }
+  };
+
   // Find which album the track belongs to
   const getAlbumData = () => {
-    // Check project sekai songs
-    if (projectsekaiSongs.some((song) => song.id === track.id)) {
-      return albumsData.find((album) => album.name === "Project Sekai Song");
+    // Check if track has album property first
+    if (track.album) {
+      return albumsData.find((album) => album.name === track.album);
     }
-    // Check jpop songs
-    if (jpopSongs.some((song) => song.id === track.id)) {
-      return albumsData.find((album) => album.name === "Jpop & Others");
-    }
-    // Check other albums based on artist
-    if (track.artist.includes("Camellia")) {
-      return albumsData.find((album) => album.name === "Camellia Album");
-    }
-    if (track.artist.includes("XI")) {
-      return albumsData.find((album) => album.name === "XI Album");
-    }
-    if (track.artist.includes("t+pazolite")) {
-      return albumsData.find((album) => album.name === "t+Pazolite Album");
-    }
-    if (track.artist.includes("Hatsune Miku")) {
-      return albumsData.find((album) => album.name === "Hatsune Miku Album");
-    }
-    // Default to Liked Songs
-    return albumsData.find((album) => album.name === "Liked Song");
+    
+    // Use the getSongAlbum function to determine the album
+    const albumName = getSongAlbum(track);
+    return albumsData.find((album) => album.name === albumName);
   };
 
   const album = getAlbumData();

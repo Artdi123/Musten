@@ -39,6 +39,38 @@ const DisplayAlbum = () => {
     setGlobalSearchQuery("");
   }, [id, setGlobalSearchQuery]); // Dependency on 'id' to re-run if album changes, and setGlobalSearchQuery
 
+  // Function to determine which album a song actually belongs to
+  const getSongAlbum = (song) => {
+    if (song.album) {
+      return song.album;
+    }
+    
+    // Check if song has "Hatsune Miku" as a singer
+    if (song.singer && song.singer.includes("Hatsune Miku")) {
+      return "Hatsune Miku Album";
+    }
+    
+    // Check if song has "Hatsune Miku" in the artist field
+    if (song.artist && song.artist.includes("Hatsune Miku")) {
+      return "Hatsune Miku Album";
+    }
+    
+    if (song.artist === "Camellia") {
+      return "Camellia Album";
+    }
+      else if (song.artist === "XI") {
+        return "XI Album";
+    } else if (song.artist === "t+pazolite") {
+      return "t+pazolite Album";
+    } else if (projectsekaiSongs.some(ps => ps.id === song.id)) {
+      return "Project Sekai Song Album";
+    } else if (jpopSongs.some(js => js.id === song.id)) {
+      return "Jpop & Other Album";
+    } else {
+      return "Liked Song";
+    }
+  };
+
   // ... (rest of the component remains the same)
   // Filter songs based on album ID
   const albumSongs = React.useMemo(() => {
@@ -82,16 +114,16 @@ const DisplayAlbum = () => {
             return artistA.localeCompare(artistB);
           });
         case "album":
-          return [...songs].sort(() => {
-            const albumA = albumData.name || "";
-            const albumB = albumData.name || "";
+          return [...songs].sort((a, b) => {
+            const albumA = getSongAlbum(a) || "";
+            const albumB = getSongAlbum(b) || "";
             return albumA.localeCompare(albumB);
           });
         default:
           return songs; // Default order (as they appear in the array)
       }
     },
-    [sortBy, albumData]
+    [sortBy]
   );
 
   // Filter and sort songs based on search query and sort option
@@ -365,7 +397,7 @@ const DisplayAlbum = () => {
                 <p className="text-xs text-gray-400 truncate">{item.artist}</p>
               </div>
             </div>
-            <p className="text-[15px]">{albumData.name}</p>
+            <p className="text-[15px]">{getSongAlbum(item)}</p>
             <p className="text-[15px] hidden sm:block">5 days ago</p>
             <p className="text-[15px] text-center">{item.duration}</p>
           </div>

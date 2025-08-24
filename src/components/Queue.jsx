@@ -1,8 +1,35 @@
 // FileName: /Queue.jsx
 import React from "react";
-import { albumsData } from "../assets/assets"; // Import albumsData
+import { albumsData, projectsekaiSongs, jpopSongs } from "../assets/assets"; // Import additional data
 
 const Queue = ({ currentPlaylist, track, playWithId, currentAlbumId }) => {
+  // Function to determine which album a song actually belongs to
+  const getSongAlbum = (song) => {
+    if (song.album) {
+      return song.album;
+    }
+    
+    // Check if song has "Hatsune Miku" as a singer
+    if (song.singer && song.singer.includes("Hatsune Miku")) {
+      return "Hatsune Miku Album";
+    }
+    
+    // Check if song has "Hatsune Miku" in the artist field
+    if (song.artist && song.artist.includes("Hatsune Miku")) {
+      return "Hatsune Miku Album";
+    }
+    
+    if (song.artist === "Camellia") {
+      return "Camellia Album";
+    } else if (projectsekaiSongs.some(ps => ps.id === song.id)) {
+      return "Project Sekai Song Album";
+    } else if (jpopSongs.some(js => js.id === song.id)) {
+      return "Jpop & Other Album";
+    } else {
+      return "Liked Song";
+    }
+  };
+
   // Find the index of the currently playing track
   const currentIndex = currentPlaylist.findIndex(
     (song) => song.id === track.id
@@ -45,6 +72,9 @@ const Queue = ({ currentPlaylist, track, playWithId, currentAlbumId }) => {
               <p className="text-xs text-gray-400 truncate">
                 {track.artist}
               </p>
+              <p className="text-xs text-gray-500 truncate">
+                {getSongAlbum(track)}
+              </p>
             </div>
           </div>
         </div>
@@ -66,6 +96,9 @@ const Queue = ({ currentPlaylist, track, playWithId, currentAlbumId }) => {
                 <p className="text-sm truncate">{song.name}</p>
                 <p className="text-xs text-gray-400 truncate">
                   {song.artist}
+                </p>
+                <p className="text-xs text-gray-500 truncate">
+                  {getSongAlbum(song)}
                 </p>
               </div>
             </li>

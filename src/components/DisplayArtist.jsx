@@ -2,7 +2,7 @@
 import React, { useContext, useCallback, useState, useEffect } from "react";
 import Navbar from "./Navbar";
 import { useParams } from "react-router-dom";
-import { assets, artistData, songsData } from "../assets/assets";
+import { assets, artistData, songsData, projectsekaiSongs, jpopSongs } from "../assets/assets";
 import { PlayerContext } from "../context/PlayerContext";
 
 const DisplayArtist = () => {
@@ -30,6 +30,33 @@ const DisplayArtist = () => {
     setGlobalSearchQuery("");
   }, [id, setGlobalSearchQuery]);
 
+  // Function to determine which album a song actually belongs to
+  const getSongAlbum = (song) => {
+    if (song.album) {
+      return song.album;
+    }
+    
+    // Check if song has "Hatsune Miku" as a singer
+    if (song.singer && song.singer.includes("Hatsune Miku")) {
+      return "Hatsune Miku Album";
+    }
+    
+    // Check if song has "Hatsune Miku" in the artist field
+    if (song.artist && song.artist.includes("Hatsune Miku")) {
+      return "Hatsune Miku Album";
+    }
+    
+    if (song.artist === "Camellia") {
+      return "Camellia Album";
+    } else if (projectsekaiSongs.some(ps => ps.id === song.id)) {
+      return "Project Sekai Song Album";
+    } else if (jpopSongs.some(js => js.id === song.id)) {
+      return "Jpop & Other Album";
+    } else {
+      return "Liked Song";
+    }
+  };
+
   const artistSongs = React.useMemo(() => {
     if (!artistInfo) return [];
     return songsData.filter(
@@ -49,6 +76,12 @@ const DisplayArtist = () => {
             const artistA = a.artist || "";
             const artistB = b.artist || "";
             return artistA.localeCompare(artistB);
+          });
+        case "album":
+          return [...songs].sort((a, b) => {
+            const albumA = getSongAlbum(a) || "";
+            const albumB = getSongAlbum(b) || "";
+            return albumA.localeCompare(albumB);
           });
         default:
           return songs;
@@ -274,6 +307,14 @@ const DisplayArtist = () => {
                   >
                     Sort by artist
                   </button>
+                  <button
+                    onClick={() => handleSort("album")}
+                    className={`block w-full text-left px-4 py-2 text-sm hover:bg-[#383838] ${
+                      sortBy === "album" ? "text-blue-500" : "text-white"
+                    }`}
+                  >
+                    Sort by album
+                  </button>
                 </div>
               </div>
             )}
@@ -285,7 +326,7 @@ const DisplayArtist = () => {
         <p>
           <b className="mr-4">#</b>Title
         </p>
-        <p>Artist</p>
+        <p>Album</p>
         <p className="hidden sm:block">Date Added</p>
         <img className="m-auto w-4" src={assets.clock_icon} alt="" />
       </div>
@@ -305,7 +346,7 @@ const DisplayArtist = () => {
                 <p className="text-xs text-gray-400 truncate">{item.artist}</p>
               </div>
             </div>
-            <p className="text-[15px]">{item.artist}</p>
+            <p className="text-[15px]">{getSongAlbum(item)}</p>
             <p className="text-[15px] hidden sm:block">5 days ago</p>
             <p className="text-[15px] text-center">{item.duration}</p>
           </div>
