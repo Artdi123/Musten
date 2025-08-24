@@ -232,10 +232,9 @@ const PlayerContextProvider = (props) => {
     );
     if (currentIndex > 0) {
       prevTrack = playlistToNavigate[currentIndex - 1];
-    } else if (isLoopOn) {
-      prevTrack = playlistToNavigate[playlistToNavigate.length - 1];
     } else {
-      return;
+      // Always loop to the last song when going backwards from the first song
+      prevTrack = playlistToNavigate[playlistToNavigate.length - 1];
     }
     await setTrack(prevTrack);
     await audioRef.current.play();
@@ -250,15 +249,14 @@ const PlayerContextProvider = (props) => {
     );
     if (currentIndex < playlistToNavigate.length - 1) {
       nextTrack = playlistToNavigate[currentIndex + 1];
-    } else if (isLoopOn) {
-      nextTrack = playlistToNavigate[0];
     } else {
-      return;
+      // Always loop back to the first song when reaching the end
+      nextTrack = playlistToNavigate[0];
     }
     await setTrack(nextTrack);
     await audioRef.current.play();
     setPlayStatus(true);
-  }, [isShuffleOn, shuffledPlaylist, currentPlaylist, track, isLoopOn]);
+  }, [isShuffleOn, shuffledPlaylist, currentPlaylist, track]);
 
   useEffect(() => {
     const audio = audioRef.current;

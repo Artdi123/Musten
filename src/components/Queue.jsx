@@ -8,14 +8,30 @@ const Queue = ({ currentPlaylist, track, playWithId, currentAlbumId }) => {
     (song) => song.id === track.id
   );
 
-  // Filter the playlist to show only songs after the current one
-  const upcomingSongs = currentPlaylist.slice(currentIndex + 1);
+  // Get the next 20 upcoming songs, looping back to the beginning if needed
+  const getUpcomingSongs = () => {
+    const upcomingSongs = [];
+    const playlistLength = currentPlaylist.length;
+    
+    // Start from the next song after current
+    let startIndex = currentIndex + 1;
+    
+    // Get up to 20 songs
+    for (let i = 0; i < 20; i++) {
+      const songIndex = (startIndex + i) % playlistLength;
+      upcomingSongs.push(currentPlaylist[songIndex]);
+    }
+    
+    return upcomingSongs;
+  };
+
+  const upcomingSongs = getUpcomingSongs();
 
   // Determine the current album name
   const currentAlbum = albumsData.find((album) => album.id === currentAlbumId);
   const queueTitle = currentAlbum
     ? `Next From: ${currentAlbum.name}`
-    : "Next Song";
+    : "Next Songs";
 
   return (
     <div className="w-full bg-[#121212] h-full overflow-y-auto p-6 text-white">
@@ -39,9 +55,9 @@ const Queue = ({ currentPlaylist, track, playWithId, currentAlbumId }) => {
         <p>No upcoming songs in the queue.</p>
       ) : (
         <ul>
-          {upcomingSongs.map((song) => (
+          {upcomingSongs.map((song, index) => (
             <li
-              key={song.id}
+              key={`${song.id}-${index}`}
               onClick={() => playWithId(song.id)}
               className={`flex items-center gap-3 p-2 rounded-md cursor-pointer hover:bg-[#282828]`}
             >
