@@ -30,7 +30,7 @@ const Queue = ({ currentPlaylist, track, playWithId, currentAlbumId }) => {
   // Determine the current album name
   const currentAlbum = albumsData.find((album) => album.id === currentAlbumId);
   const queueTitle = currentAlbum
-    ? `Next From: ${currentAlbum.name}`
+    ? `Next Songs from: ${currentAlbum.name}`
     : "Next Songs";
 
   return (

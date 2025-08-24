@@ -144,7 +144,10 @@ const DisplayAlbum = () => {
       setIsPlayingAlbum(false);
     } else {
       // When playing from the album, set the current playlist to the album's songs
-      setCurrentPlaylist(songsToUse);
+      // But only if shuffle is off, otherwise let playWithId handle it
+      if (!isShuffleOn) {
+        setCurrentPlaylist(songsToUse);
+      }
       if (!songsToUse.some((song) => song.id === track?.id)) {
         playWithId(songsToUse[0].id, songsToUse, albumData.id);
       } else {
@@ -165,12 +168,16 @@ const DisplayAlbum = () => {
     setCurrentPlaylist,
     albumData.id,
     sortSongs,
+    isShuffleOn,
   ]);
 
   // Update current playlist when albumSongs or filteredSongs change
   useEffect(() => {
     const songsToUse = searchQuery ? filteredSongs : sortSongs(albumSongs);
-    setCurrentPlaylist(songsToUse);
+    // Only update the playlist if shuffle is off, otherwise let playWithId handle it
+    if (!isShuffleOn) {
+      setCurrentPlaylist(songsToUse);
+    }
   }, [
     albumSongs,
     filteredSongs,
@@ -178,6 +185,7 @@ const DisplayAlbum = () => {
     setCurrentPlaylist,
     sortBy,
     sortSongs,
+    isShuffleOn,
   ]);
 
   // Toggle sort options dropdown
