@@ -322,12 +322,11 @@ const DisplayArtist = () => {
         </div>
       </div>
 
-      <div className="grid grid-cols-3 sm:grid-cols-4 mt-10 mb-4 pl-2 text-[#a7a7a7]">
+      <div className="grid grid-cols-2 sm:grid-cols-3 mt-10 mb-4 pl-2 text-[#a7a7a7]">
         <p>
           <b className="mr-4">#</b>Title
         </p>
         <p>Album</p>
-        <p className="hidden sm:block">Date Added</p>
         <img className="m-auto w-4" src={assets.clock_icon} alt="" />
       </div>
       <hr />
@@ -336,7 +335,7 @@ const DisplayArtist = () => {
           <div
             onClick={() => playWithId(item.id, artistSongs, null)}
             key={index}
-            className="grid grid-cols-3 sm:grid-cols-4 gap-2 p-2 items-center text-[#a7a7a7] text-sm hover:bg-[#ffffff26] cursor-pointer"
+            className="grid grid-cols-2 sm:grid-cols-3 gap-2 p-2 items-center text-[#a7a7a7] text-sm hover:bg-[#ffffff26] cursor-pointer"
           >
             <div className="flex items-center">
               <b className="mr-4 text-[#a7a7a7] w-4">{index + 1}</b>
@@ -347,7 +346,6 @@ const DisplayArtist = () => {
               </div>
             </div>
             <p className="text-[15px]">{getSongAlbum(item)}</p>
-            <p className="text-[15px] hidden sm:block">5 days ago</p>
             <p className="text-[15px] text-center">{item.duration}</p>
           </div>
         )
