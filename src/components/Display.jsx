@@ -6,7 +6,7 @@ import DisplayArtist from "./DisplayArtist.jsx";
 import DisplayProfile from "./DisplayProfile.jsx";
 import { albumsData } from "../assets/assets.js";
 
-const Display = () => {
+const Display = ({ showRightSidebar = false }) => {
   const displayRef = useRef();
   const location = useLocation();
   const isAlbum = location.pathname.includes("album");
@@ -43,7 +43,11 @@ const Display = () => {
   return (
     <div
       ref={displayRef}
-      className="w-[100%] m-2 px-6 pt-4 rounded bg-[#121212] text-white overflow-auto lg:w-[75%] lg:ml-0"
+      className={`m-2 px-6 pt-4 rounded bg-[#121212] text-white overflow-auto flex-1 ${
+        showRightSidebar 
+          ? "" 
+          : ""
+      }`}
     >
       <Routes>
         <Route path="/" element={<DisplayHome />} />

@@ -1,12 +1,16 @@
-import React, { useContext, useRef, useEffect } from "react"; // Import useRef and useEffect
+import React, { useContext, useRef, useEffect, useState } from "react"; // Import useRef, useEffect, and useState
 import { useNavigate } from "react-router-dom";
 import { PlayerContext } from "../context/PlayerContext";
 import { artistData } from "../assets/assets";
+import View from "./View";
+import Queue from "./Queue";
 
-const FullScreenPlayer = ({ track, currentPlaylist, onClose }) => {
-  const { playStatus, audioRef } = useContext(PlayerContext); // Get playStatus and audioRef from context
+const FullScreenPlayer = ({ track, currentPlaylist, onClose, showView, setShowView, showQueue, setShowQueue }) => {
+  const { playStatus, audioRef, playWithId, currentAlbumSongs, currentAlbumId } = useContext(PlayerContext); // Get playStatus, audioRef, and other needed functions
   const navigate = useNavigate(); // Use navigate for routing
   const videoRef = useRef(null); // Create a ref for the video element
+  const [fullscreenShowView, setFullscreenShowView] = useState(false);
+  const [fullscreenShowQueue, setFullscreenShowQueue] = useState(false);
 
   // Find matching artist data for the current track
   const getArtistData = () => {
@@ -85,102 +89,124 @@ const FullScreenPlayer = ({ track, currentPlaylist, onClose }) => {
   }, [audioRef]);
 
   return (
-    <div className="relative w-full h-full flex flex-col items-center justify-center bg-gradient-to-b from-blue-600 to-black text-white p-8">
-      {/* Close Button */}
-      <button
-        onClick={onClose}
-        className="absolute top-4 right-4 text-white text-2xl p-2 rounded-full hover:bg-gray-700 z-10"
-        title="Exit Full Screen"
-      >
-        &times;
-      </button>
+    <>
+      <div className="relative w-full h-full flex flex-col items-center justify-center bg-gradient-to-b from-blue-600 to-black text-white p-8">
+        {/* Close Button */}
+        <button
+          onClick={onClose}
+          className="absolute top-4 right-4 text-white text-2xl p-2 rounded-full hover:bg-gray-700 z-10"
+          title="Exit Full Screen"
+        >
+          &times;
+        </button>
 
-      {/* Main Content */}
-      <div className="flex flex-col items-center justify-center flex-grow w-full max-w-4xl">
-        {/* Song Cover or Video */}
-        <div className="mb-8 w-full max-w-[800px] h-[450px] flex items-center justify-center">
-          {" "}
-          {/* Adjusted container for video */}
-          {track.video ? (
-            <video
-              ref={videoRef} // Assign the ref to the video element
-              src={track.video}
-              autoPlay // Attempt to autoplay
-              loop // Loop the video
-              muted // Mute initially for autoplay to work
-              playsInline // Important for iOS autoplay
-              className="w-full h-full object-contain rounded-lg shadow-lg" // Use object-contain to prevent cropping
-              onLoadedMetadata={() => {
-                if (videoRef.current && playStatus) {
-                  videoRef.current
-                    .play()
-                    .catch((e) =>
-                      console.error("Video play failed on load:", e)
-                    );
-                }
-              }}
-              onTimeUpdate={() => {
-                // Optional: Sync video time with audio time if needed, but usually audio is master
-                if (
-                  videoRef.current &&
-                  audioRef.current &&
-                  Math.abs(
-                    videoRef.current.currentTime - audioRef.current.currentTime
-                  ) > 0.5
-                ) {
-                  videoRef.current.currentTime = audioRef.current.currentTime;
-                }
-              }}
-            />
-          ) : (
-            <img
-              src={track.image}
-              alt={track.name}
-              className="w-[400px] h-[400px] object-cover rounded-lg shadow-lg mt-32 mb-16"
-            />
-          )}
-        </div>
-
-        {/* Bottom Section: Artist Description and Next in Queue */}
-        <div className="w-full flex justify-between items-center gap-6">
-          {/* Artist Description (Left Below) */}
-          <div className="w-1/2 bg-[#121212] p-4">
-            <h3 className="text-xl font-bold mb-4">About the Artist</h3>
-            <div className="flex gap-3 justify-between items-center">
-              <div className="hidden lg:flex items-center gap-4">
-                <img
-                  className="w-10 h-10 rounded object-cover cursor-pointer"
-                  onClick={() => navigate(`/artist/${artist.id}`)}
-                  src={artist.profile}
-                  alt="" />
-                <div>
-                  <p className="truncate w-72 text-sm hover:underline cursor-pointer" onClick={() => navigate(`/artist/${artist.id}`)}>{artist.name}</p>
-                  <p className="truncate w-72 text-sm">{artist.Listener}</p>
-                </div>
-              </div>
-            </div>
+        {/* Main Content */}
+        <div className="flex flex-col items-center justify-center flex-grow w-full max-w-4xl">
+          {/* Song Cover or Video */}
+          <div className="mb-8 w-full max-w-[800px] h-[450px] flex items-center justify-center">
+            {" "}
+            {/* Adjusted container for video */}
+            {track.video ? (
+              <video
+                ref={videoRef} // Assign the ref to the video element
+                src={track.video}
+                autoPlay // Attempt to autoplay
+                loop // Loop the video
+                muted // Mute initially for autoplay to work
+                playsInline // Important for iOS autoplay
+                className="w-full h-full object-contain rounded-lg shadow-lg" // Use object-contain to prevent cropping
+                onLoadedMetadata={() => {
+                  if (videoRef.current && playStatus) {
+                    videoRef.current
+                      .play()
+                      .catch((e) =>
+                        console.error("Video play failed on load:", e)
+                      );
+                  }
+                }}
+                onTimeUpdate={() => {
+                  // Optional: Sync video time with audio time if needed, but usually audio is master
+                  if (
+                    videoRef.current &&
+                    audioRef.current &&
+                    Math.abs(
+                      videoRef.current.currentTime - audioRef.current.currentTime
+                    ) > 0.5
+                  ) {
+                    videoRef.current.currentTime = audioRef.current.currentTime;
+                  }
+                }}
+              />
+            ) : (
+              <img
+                src={track.image}
+                alt={track.name}
+                className="w-[400px] h-[400px] object-cover rounded-lg shadow-lg mt-32 mb-16"
+              />
+            )}
           </div>
 
-          {/* Next Song in Queue (Right Below) */}
-          <div className="w-1/2 bg-[#121212] p-4 ">
-            <h3 className="text-xl font-bold mb-4">Next in Queue</h3>
-            {nextSong ? (
+          {/* Bottom Section: Artist Description and Next in Queue */}
+          <div className="w-full flex justify-between items-center gap-6">
+            {/* Artist Description (Left Below) */}
+            <div className="w-1/2 bg-[#121212] p-4">
+              <h3 className="text-xl font-bold mb-4">About the Artist</h3>
               <div className="flex gap-3 justify-between items-center">
                 <div className="hidden lg:flex items-center gap-4">
-                  <img className="w-10 h-10 rounded object-cover" src={nextSong.image} alt="" />
+                  <img
+                    className="w-10 h-10 rounded object-cover cursor-pointer"
+                    onClick={() => navigate(`/artist/${artist.id}`)}
+                    src={artist.profile}
+                    alt="" />
                   <div>
-                    <p className="truncate w-72 text-sm">{nextSong.name}</p>
-                    <p className="truncate w-72 text-sm">{nextSong.artist}</p>
+                    <p className="truncate w-72 text-sm hover:underline cursor-pointer" onClick={() => navigate(`/artist/${artist.id}`)}>{artist.name}</p>
+                    <p className="truncate w-72 text-sm">{artist.Listener}</p>
                   </div>
                 </div>
               </div>
-            ) : (
-              <p className="text-gray-400">No more songs in queue.</p>
-            )}
+            </div>
+
+            {/* Next Song in Queue (Right Below) */}
+            <div className="w-1/2 bg-[#121212] p-4 ">
+              <h3 className="text-xl font-bold mb-4">Next in Queue</h3>
+              {nextSong ? (
+                <div className="flex gap-3 justify-between items-center">
+                  <div className="hidden lg:flex items-center gap-4">
+                    <img className="w-10 h-10 rounded object-cover" src={nextSong.image} alt="" />
+                    <div>
+                      <p className="truncate w-72 text-sm">{nextSong.name}</p>
+                      <p className="text-gray-400 text-sm truncate w-72">{nextSong.artist}</p>
+                    </div>
+                  </div>
+                </div>
+              ) : (
+                <p className="text-gray-400">No more songs in queue.</p>
+              )}
+            </div>
           </div>
         </div>
       </div>
-    </div>
+
+      {/* Fullscreen View Popup */}
+      {fullscreenShowView && (
+        <div className="fixed right-0 top-0 h-[90%] w-[20%] bg-[#121212] z-50 shadow-2xl">
+          <View />
+        </div>
+      )}
+
+      {/* Fullscreen Queue Popup */}
+      {fullscreenShowQueue && (
+        <div className="fixed right-0 top-0 h-[90%] w-[20%] bg-[#121212] z-50 shadow-2xl">
+          <Queue
+            currentPlaylist={currentPlaylist}
+            track={track}
+            playWithId={playWithId}
+            currentAlbumSongs={currentAlbumSongs}
+            currentAlbumId={currentAlbumId}
+          />
+        </div>
+      )}
+    </>
   );
 };
 

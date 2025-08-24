@@ -10,7 +10,7 @@ const Sidebar = () => {
     useContext(PlayerContext); // Destructure currentAlbumId and track
 
   return (
-    <div className="w-[25%] h-full p-2 flex-col gap-2 text-white hidden lg:flex">
+    <div className="w-[20%] h-full p-2 flex-col gap-2 text-white hidden lg:flex">
       <div className="bg-[#121212] h-[10%] rounded flex flex-col justify-around">
         <div
           onClick={() => {

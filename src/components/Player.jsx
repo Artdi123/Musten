@@ -1,14 +1,10 @@
 import React, { useState, useContext } from "react";
 import { assets } from "../assets/assets";
 import { PlayerContext } from "../context/PlayerContext";
-import View from "./View";
-import Queue from "./Queue";
 import LyricsDisplay from "./Lyrics";
 import FullScreenPlayer from "./FullScreenPlayer";
 
-const Player = () => {
-  const [showView, setShowView] = useState(false);
-  const [showQueue, setShowQueue] = useState(false);
+const Player = ({ showView, setShowView, showQueue, setShowQueue }) => {
   const [showLyrics, setShowLyrics] = useState(false);
   const [showFullScreen, setShowFullScreen] = useState(false); // New state for full screen
   const {
@@ -174,33 +170,13 @@ const Player = () => {
         </div>
       </div>
 
-      {/* View sidebar */}
-      {showView && (
-        <div className="fixed right-0 top-0 h-[90%] w-[20%] bg-[#121212] z-50 shadow-2xl">
-          <View />
-        </div>
-      )}
-
-      {/* Queue sidebar */}
-      {showQueue && (
-        <div className="fixed right-0 top-0 h-[90%] w-[20%] bg-[#121212] z-50 shadow-2xl">
-          <Queue
-            currentPlaylist={currentPlaylist}
-            track={track}
-            playWithId={playWithId}
-            currentAlbumSongs={currentAlbumSongs}
-            currentAlbumId={currentAlbumId}
-          />
-        </div>
-      )}
-
-      {/* Lyrics display */}
+      {/* Lyrics display - Keep as popup */}
       {showLyrics && (
         <div
           className={`fixed top-0 h-[90%] bg-[#121212] z-50 p-4 overflow-y-auto border-r-8 border-black ${
             showFullScreen
               ? "left-0 w-[20%] shadow-2xl" // Styles when full screen is on 
-              : "left-[24.9%] w-[55.5%]" // Default styles
+              : "left-[20%] w-[60%]" // Centered in middle when both sidebars are visible
           }`}
         >
           <LyricsDisplay currentTime={time.currentTime} track={track} />
@@ -216,6 +192,10 @@ const Player = () => {
             track={track}
             currentPlaylist={currentPlaylist}
             onClose={() => setShowFullScreen(false)}
+            showView={showView}
+            setShowView={setShowView}
+            showQueue={showQueue}
+            setShowQueue={setShowQueue}
           />
         </div>
       )}

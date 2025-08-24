@@ -78,26 +78,26 @@ const View = () => {
       : null;
 
   return (
-    <div className="w-full bg-[#121212] h-full overflow-y-auto p-6 text-white">
-      <h1 className="text-2xl font-bold mb-6">
+    <div className="w-full bg-[#121212] h-full overflow-y-auto p-4 text-white">
+      <h1 className="text-xl font-bold mb-4">
         {album?.name || "Now Playing"}
       </h1>
 
-      <div className="flex flex-col items-start justify-center mb-8">
+      <div className="flex flex-col items-start justify-center mb-6">
         <img
           src={track.image}
           alt={track.name}
-          className="w-[300px] h-[300px] object-cover rounded-md mb-4"
+          className="w-full aspect-square object-cover rounded-md mb-4"
         />
-        <div className="overflow-hidden">
-          <h2 className="text-xl font-bold">{track.name}</h2>
+        <div className="overflow-hidden w-full">
+          <h2 className="text-lg font-bold truncate">{track.name}</h2>
         </div>
-        <p className="text-gray-400">{track.artist}</p>
+        <p className="text-gray-400 text-sm truncate w-full">{track.artist}</p>
       </div>
 
       <div className="mb-6 p-3 bg-[#1f1e1e] rounded">
-        <h3 className="text-lg font-bold mb-4">About the artist</h3>
-        <div className="flex items-center mb-4">
+        <h3 className="text-base font-bold mb-3">About the artist</h3>
+        <div className="flex items-center mb-3">
           <div
             className="cursor-pointer"
             onClick={() => navigate(`/artist/${artist.id}`)}
@@ -105,12 +105,12 @@ const View = () => {
             <img
               src={artist.profile}
               alt={artist.name}
-              className="w-12 h-12 rounded-full object-cover mr-3"
+              className="w-10 h-10 rounded-full object-cover mr-3"
             />
           </div>
-          <div>
+          <div className="min-w-0 flex-1">
             <h4
-              className="font-bold w-56 truncate cursor-pointer hover:underline"
+              className="font-bold truncate cursor-pointer hover:underline"
               onClick={() => navigate(`/artist/${artist.id}`)}
             >
               {artist.name}
@@ -118,15 +118,15 @@ const View = () => {
             <p className="text-sm text-gray-400">{artist.Listener}</p>
           </div>
         </div>
-        <p className="text-sm text-gray-300 max-h-[100px] overflow-y-auto">
+        <p className="text-sm text-gray-300 max-h-[80px] overflow-y-auto">
           {artist.desc || "No artist description available."}
         </p>
       </div>
 
       {/* Next in Queue Section */}
       <div className="mb-6 p-3 bg-[#1f1e1e] rounded">
-        <div className="flex justify-between items-center mb-4">
-          <h3 className="text-lg font-bold">Next in Queue</h3>
+        <div className="flex justify-between items-center mb-3">
+          <h3 className="text-base font-bold">Next in Queue</h3>
         </div>
         {nextSong ? (
           <div
@@ -136,11 +136,11 @@ const View = () => {
             <img
               src={nextSong.image}
               alt={nextSong.name}
-              className="w-12 h-12 rounded object-cover"
+              className="w-10 h-10 rounded object-cover flex-shrink-0"
             />
-            <div>
-              <p className="font-medium truncate w-48">{nextSong.name}</p>
-              <p className="text-gray-400 text-sm truncate w-48">
+            <div className="min-w-0 flex-1">
+              <p className="font-medium truncate">{nextSong.name}</p>
+              <p className="text-gray-400 text-sm truncate">
                 {nextSong.artist}
               </p>
             </div>

@@ -34,15 +34,15 @@ const Queue = ({ currentPlaylist, track, playWithId, currentAlbumId }) => {
     : "Next Songs";
 
   return (
-    <div className="w-full bg-[#121212] h-full overflow-y-auto p-6 text-white">
+    <div className="w-full bg-[#121212] h-full overflow-y-auto p-4 text-white">
       {track && (
         <div className="mb-4">
-          <h3 className="text-lg font-semibold">Currently Playing</h3>
+          <h3 className="text-base font-semibold">Currently Playing</h3>
           <div className="flex items-center gap-3 p-2 rounded-md bg-[#282828]">
-            <img src={track.image} alt="" className="w-12 h-12 rounded" />
-            <div>
-              <p className="text-base truncate w-60">{track.name}</p>
-              <p className="text-sm text-gray-400 truncate w-40">
+            <img src={track.image} alt="" className="w-10 h-10 rounded flex-shrink-0" />
+            <div className="min-w-0 flex-1">
+              <p className="text-sm truncate">{track.name}</p>
+              <p className="text-xs text-gray-400 truncate">
                 {track.artist}
               </p>
             </div>
@@ -50,9 +50,9 @@ const Queue = ({ currentPlaylist, track, playWithId, currentAlbumId }) => {
         </div>
       )}
 
-      <h2 className="text-lg font-semibold mb-4">{queueTitle}</h2>
+      <h2 className="text-base font-semibold mb-4">{queueTitle}</h2>
       {upcomingSongs.length === 0 ? (
-        <p>No upcoming songs in the queue.</p>
+        <p className="text-sm">No upcoming songs in the queue.</p>
       ) : (
         <ul>
           {upcomingSongs.map((song, index) => (
@@ -61,10 +61,10 @@ const Queue = ({ currentPlaylist, track, playWithId, currentAlbumId }) => {
               onClick={() => playWithId(song.id)}
               className={`flex items-center gap-3 p-2 rounded-md cursor-pointer hover:bg-[#282828]`}
             >
-              <img src={song.image} alt="" className="w-10 h-10 rounded" />
-              <div>
-                <p className="text-sm truncate w-60">{song.name}</p>
-                <p className="text-xs text-gray-400 truncate w-40">
+              <img src={song.image} alt="" className="w-8 h-8 rounded flex-shrink-0" />
+              <div className="min-w-0 flex-1">
+                <p className="text-sm truncate">{song.name}</p>
+                <p className="text-xs text-gray-400 truncate">
                   {song.artist}
                 </p>
               </div>
