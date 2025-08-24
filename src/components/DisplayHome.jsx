@@ -11,18 +11,20 @@ import AlbumItem from "./AlbumItem";
 import SongItem from "./SongItem";
 import SearchListItem from "./SearchListItem";
 import { PlayerContext } from "../context/PlayerContext";
+import { useNavigate } from "react-router-dom";
 
 const DisplayHome = () => {
   const { globalSearchQuery} = useContext(PlayerContext); // Consume userData
   const [randomSongs, setRandomSongs] = useState([]);
   const [randomArtists, setRandomArtists] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const shuffledSongs = [...songsData].sort(() => 0.5 - Math.random());
     setRandomSongs(shuffledSongs.slice(0, 15));
 
     const shuffledArtists = [...artistData].sort(() => 0.5 - Math.random());
-    setRandomArtists(shuffledArtists.slice(0, 5));
+    setRandomArtists(shuffledArtists.slice(0, 8));
   }, []);
 
   const filteredAlbums = albumsData.filter(
@@ -140,9 +142,18 @@ const DisplayHome = () => {
           </div>
           <div className="mb-4">
             <h1 className="my-5 font-bold text-2xl">Recommended Artists</h1>
-            <div className="flex overflow-auto">
+            <div className="flex overflow-x-auto gap-4 pb-4">
               {randomArtists.map((item, index) => (
-                <SearchListItem key={index} item={item} type="artist" />
+                <div key={index} className="flex flex-col items-start">
+                  <img
+                    src={item.profile}
+                    alt={item.name}
+                    onClick={() => navigate(`/artist/${item.id}`)}
+                    className="w-36 h-36 rounded-full object-cover mb-2 cursor-pointer"
+                  />
+                  <p className="font-medium hover:underline cursor-pointer" onClick={() => navigate(`/artist/${item.id}`)}>{item.name}</p>
+                  <p className="font-normal text-gray-300">Artist</p>
+                </div>
               ))}
             </div>
           </div>

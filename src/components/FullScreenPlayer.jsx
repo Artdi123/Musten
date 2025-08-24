@@ -203,7 +203,6 @@ const FullScreenPlayer = ({ track, currentPlaylist, onClose, showView, setShowVi
                     <div>
                       <p className="truncate w-72 text-sm">{nextSong.name}</p>
                       <p className="text-gray-400 text-sm truncate w-72">{nextSong.artist}</p>
-                      <p className="text-gray-500 text-sm truncate w-72">{getSongAlbum(nextSong)}</p>
                     </div>
                   </div>
                 </div>

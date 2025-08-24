@@ -72,9 +72,6 @@ const Queue = ({ currentPlaylist, track, playWithId, currentAlbumId }) => {
               <p className="text-xs text-gray-400 truncate">
                 {track.artist}
               </p>
-              <p className="text-xs text-gray-500 truncate">
-                {getSongAlbum(track)}
-              </p>
             </div>
           </div>
         </div>
@@ -96,9 +93,6 @@ const Queue = ({ currentPlaylist, track, playWithId, currentAlbumId }) => {
                 <p className="text-sm truncate">{song.name}</p>
                 <p className="text-xs text-gray-400 truncate">
                   {song.artist}
-                </p>
-                <p className="text-xs text-gray-500 truncate">
-                  {getSongAlbum(song)}
                 </p>
               </div>
             </li>
