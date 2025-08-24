@@ -173,10 +173,10 @@ const Player = ({ showView, setShowView, showQueue, setShowQueue }) => {
       {/* Lyrics display - Keep as popup */}
       {showLyrics && (
         <div
-          className={`fixed top-0 h-[90%] bg-[#121212] z-50 p-4 overflow-y-auto border-r-8 border-black ${
+          className={`fixed top-0 h-[90%] bg-[#121212] z-50 overflow-y-auto border-r-8 border-black ${
             showFullScreen
               ? "left-0 w-[20%] shadow-2xl" // Styles when full screen is on 
-              : "left-[20%] w-[60%]" // Centered in middle when both sidebars are visible
+              : "left-[20%] w-[60%]" // Adjusted to cover main display area
           }`}
         >
           <LyricsDisplay currentTime={time.currentTime} track={track} />

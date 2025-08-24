@@ -5,6 +5,7 @@ const LyricsDisplay = () => {
   const { track, time, seekSong, audioRef } = useContext(PlayerContext); // Destructure seekSong and audioRef
   const [parsedLyrics, setParsedLyrics] = useState([]);
   const lyricsContainerRef = useRef(null); // Ref for the lyrics container
+  const activeLyricRef = useRef(null); // Ref for the currently active lyric line
 
   useEffect(() => {
     if (!track?.lyrics) {
@@ -49,6 +50,28 @@ const LyricsDisplay = () => {
     (line) => line.time <= currentTime
   );
 
+  // Smooth scroll to active lyric
+  useEffect(() => {
+    if (activeLyricRef.current && lyricsContainerRef.current) {
+      const container = lyricsContainerRef.current;
+      const activeElement = activeLyricRef.current;
+      
+      // Calculate the scroll position to center the active lyric
+      const containerHeight = container.clientHeight;
+      const elementTop = activeElement.offsetTop;
+      const elementHeight = activeElement.clientHeight;
+      
+      // Center the active lyric in the container
+      const scrollTop = elementTop - (containerHeight / 2) + (elementHeight / 2);
+      
+      // Smooth scroll to the position
+      container.scrollTo({
+        top: scrollTop,
+        behavior: 'smooth'
+      });
+    }
+  }, [activeIndex, currentTime]);
+
   const handleLyricClick = (lineTime) => {
     if (audioRef.current && seekSong) {
       audioRef.current.currentTime = lineTime;
@@ -60,21 +83,22 @@ const LyricsDisplay = () => {
   return (
     <div
       ref={lyricsContainerRef}
-      className="text-white p-4 overflow-y-auto h-full"
+      className="text-white p-4 overflow-y-auto h-full scroll-smooth"
     >
       {" "}
-      {/* Add ref here */}
-      <h2 className="text-xl font-bold mb-4">{track?.name} - Lyrics</h2>
+      {/* Restored padding since parent container no longer has padding */}
+      <h2 className="text-xl font-bold mb-4 text-center">{track?.name} - Lyrics</h2>
       {parsedLyrics.length > 0 ? (
-        <div className="space-y-3">
+        <div className="space-y-3 w-full">
           {parsedLyrics.map((line, index) => (
             <p
               key={index}
-              className={`transition-all duration-200 cursor-pointer ${
-                // Add cursor-pointer
+              ref={index === activeIndex ? activeLyricRef : null} // Assign ref to active lyric
+              className={`transition-all duration-300 cursor-pointer text-center w-full ${
+                // Add cursor-pointer and smooth transition
                 index === activeIndex
-                  ? "text-blue-400 text-lg font-bold"
-                  : "text-gray-400"
+                  ? "text-blue-400 text-lg font-bold scale-105" // Added scale effect for active lyric
+                  : "text-gray-400 hover:text-gray-300" // Added hover effect
               }`}
               onClick={() => handleLyricClick(line.time)} // Add onClick handler
             >
@@ -83,7 +107,7 @@ const LyricsDisplay = () => {
           ))}
         </div>
       ) : (
-        <div className="text-white">
+        <div className="text-white text-center w-full">
           {track?.lyrics ? (
             <>
               <p>Raw Lyrics</p>

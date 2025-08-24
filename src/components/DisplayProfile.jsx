@@ -1,6 +1,5 @@
 // /DisplayProfile.jsx
 import React, { useContext, useEffect, useState } from "react";
-import Navbar from "./Navbar";
 import {
   assets,
   artistData,
@@ -73,7 +72,6 @@ const DisplayProfile = () => {
 
   return (
     <>
-      <Navbar />
       <div className="mt-10">
         {/* User Profile Section */}
         <div className="flex items-center gap-6 mb-10">
