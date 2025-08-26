@@ -74,14 +74,14 @@ const DisplayProfile = () => {
     <>
       <div className="mt-10">
         {/* User Profile Section */}
-        <div className="flex items-center gap-6 mb-10">
+        <div className="flex flex-col sm:flex-row items-center sm:items-center gap-4 sm:gap-6 mb-10">
           {/* Profile Picture with Edit Overlay */}
           <div
             className="relative group cursor-pointer"
             onClick={() => setShowEditModal(true)}
           >
             <img
-              className="w-52 h-52 rounded-full object-cover"
+              className="w-24 h-24 sm:w-32 sm:h-32 md:w-52 md:h-52 rounded-full object-cover"
               src={userData.profilePicture} // Use userData from context
               alt={userData.name}
             />
@@ -96,12 +96,12 @@ const DisplayProfile = () => {
             </div>
           </div>
 
-          <div>
-            <p className="text-sm font-semibold">Profile</p>
-            <h1 className="text-5xl font-bold mb-2 md:text-7xl">
+          <div className="min-w-0 max-w-full text-center sm:text-left">
+            <p className="text-xs sm:text-sm font-semibold">Profile</p>
+            <h1 className="text-2xl sm:text-4xl md:text-5xl lg:text-7xl font-bold mb-1 sm:mb-2 leading-tight break-words truncate">
               {userData.name} {/* Use userData from context */}
             </h1>
-            <p className="text-gray-400">
+            <p className="text-gray-400 text-xs sm:text-sm">
               <span className="font-normal">{albumsData.length}</span> Playlists
             </p>
           </div>
@@ -111,7 +111,7 @@ const DisplayProfile = () => {
         <div className="mb-10">
           <h2 className="text-2xl font-bold mb-8">Top Artists This Month</h2>
           {topArtistsThisMonth.length > 0 ? (
-            <div className="flex overflow-x-auto gap-4 pb-4">
+            <div className="flex overflow-x-auto gap-2 sm:gap-4 pb-2 sm:pb-4">
               {topArtistsThisMonth.map((artist, index) => (
                 <div
                   key={index}
@@ -121,7 +121,7 @@ const DisplayProfile = () => {
                     src={artist.profile}
                     alt={artist.name}
                     onClick={() => navigate(`/artist/${artist.id}`)}
-                    className="w-36 h-36 rounded-full object-cover mb-2 cursor-pointer"
+                    className="w-20 h-20 sm:w-28 sm:h-28 md:w-36 md:h-36 rounded-full object-cover mb-2 cursor-pointer"
                   />
                   <p
                     className="font-medium hover:underline cursor-pointer"
@@ -142,13 +142,13 @@ const DisplayProfile = () => {
         <div className="mb-10">
           <h2 className="text-2xl font-bold mb-4">Top Tracks This Month</h2>
           {topTracksThisMonth.length > 0 ? (
-            <div className="grid grid-cols-1 gap-2">
+            <div className="grid grid-cols-1 gap-1 sm:gap-2">
               {" "}
               {topTracksThisMonth.map((song, index) => (
                 <div
                   key={index}
                   onClick={() => playWithId(song.id)}
-                  className="flex items-center justify-between gap-3 p-2 pr-16 hover:bg-[#2a2a2a] rounded cursor-pointer"
+                  className="flex items-center justify-between gap-1 sm:gap-2 p-1.5 sm:p-2 pr-6 sm:pr-16 hover:bg-[#2a2a2a] rounded cursor-pointer"
                 >
                   <div className="flex items-center gap-3">
                     {" "}
@@ -162,11 +162,15 @@ const DisplayProfile = () => {
                       className="w-12 h-12 rounded object-cover"
                     />
                     <div>
-                      <p className="font-medium truncate w-48">{song.name}</p>
-                      <p className="text-gray-400 text-sm truncate w-48">{song.artist}</p>
+                      <p className="font-medium truncate w-32 sm:w-52">{song.name}</p>
+                      <p className="text-gray-400 text-sm truncate w-32 sm:w-52">
+                        {song.artist}
+                      </p>
                     </div>
                   </div>
-                  <p className="text-gray-400 text-sm hidden sm:block">{song.duration}</p>
+                  <p className="text-gray-400 text-sm hidden sm:block">
+                    {song.duration}
+                  </p>
                 </div>
               ))}
             </div>

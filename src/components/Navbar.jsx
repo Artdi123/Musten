@@ -41,7 +41,7 @@ const Navbar = () => {
         {/* Conditional rendering for Search Input */}
         {!(isAlbumPage || isArtistPage || isProfilePage) && (
           <div className="flex items-center gap-2 sm:gap-4">
-            <div className="relative w-40 sm:w-64">
+            <div className="relative w-32 sm:w-64">
               <input
                 type="text"
                 placeholder="Search songs or albums..."

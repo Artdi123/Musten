@@ -196,15 +196,17 @@ const DisplayArtist = () => {
   return (
     <>
       <Navbar />
-      <div className="mt-10 flex gap-8 flex-col md:flex-row md:items-end">
+      <div className="mt-10 flex gap-4 md:gap-8 flex-col md:flex-row md:items-end">
+        <div className="flex items-center justify-center sm:justify-start">
         <img
           className="w-48 h-48 rounded-full object-cover"
           src={artistInfo.profile}
           alt={artistInfo.name}
         />
+        </div>
         <div className="flex flex-col">
           <p> Artist </p>
-          <h2 className="text-5xl font-bold mb-4 md:text-7xl">
+          <h2 className="text-3xl font-bold mb-4 md:text-6xl">
             {artistInfo.name}
           </h2>
           <h4>{artistInfo.Listener}</h4>
@@ -260,7 +262,7 @@ const DisplayArtist = () => {
         </div>
 
         <div className="flex items-center gap-4">
-          <div className="relative w-36 sm:w-64">
+          <div className="relative w-32 sm:w-64">
             <input
               type="text"
               placeholder="Search in artist's songs..."
@@ -345,19 +347,25 @@ const DisplayArtist = () => {
           <div
             onClick={() => playWithId(item.id, artistSongs, null)}
             key={index}
-            className="grid grid-cols-1 sm:grid-cols-3 gap-2 p-2 items-center text-[#a7a7a7] text-sm hover:bg-[#ffffff26] cursor-pointer"
+            className="grid grid-cols-1 sm:grid-cols-3 gap-2 sm:gap-4 p-2 items-center text-[#a7a7a7] text-sm hover:bg-[#ffffff26] cursor-pointer"
           >
-            <div className="flex items-center w-full">
-              <b className="mr-4 text-[#a7a7a7] w-4">{index + 1}</b>
-              <img className="w-10 h-10 mr-3 rounded" src={item.image} alt="" />
-              <div className="flex-1 min-w-0 sm:truncate">
-                <p className="text-white sm:truncate">{item.name}</p>
-                <p className="text-xs text-gray-400 sm:truncate">
-                  {item.artist}
-                </p>
+            <div className="flex items-center w-full gap-2 min-w-0">
+              <b className="mr-2 sm:mr-4 text-[#a7a7a7] w-4 flex-shrink-0 text-center">
+                {index + 1}
+              </b>
+              <img
+                className="w-10 h-10 sm:w-12 sm:h-12 mr-2 sm:mr-3 rounded object-cover flex-shrink-0"
+                src={item.image}
+                alt=""
+              />
+              <div className="flex-1 min-w-0">
+                <p className="text-white truncate">{item.name}</p>
+                <p className="text-xs text-gray-400 truncate">{item.artist}</p>
               </div>
             </div>
-            <p className="hidden sm:block text-[15px]">{getSongAlbum(item)}</p>
+            <p className="hidden sm:block text-[15px] truncate">
+              {getSongAlbum(item)}
+            </p>
             <p className="hidden sm:block text-[15px] text-center">
               {item.duration}
             </p>
@@ -377,7 +385,7 @@ const DisplayArtist = () => {
           <img
             src={artistInfo.profile}
             alt={artistInfo.name}
-            className="w-40 h-40 rounded-full object-cover mr-4"
+            className="w-24 h-24 sm:w-32 sm:h-32 md:w-40 md:h-40 rounded-full object-cover mr-4"
           />
         </div>
         <div>

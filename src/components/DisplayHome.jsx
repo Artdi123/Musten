@@ -99,7 +99,7 @@ const DisplayHome = () => {
         <>
           <div className="mb-4">
             <h1 className="my-5 font-bold text-2xl">Albums</h1>
-            <div className="flex overflow-auto">
+            <div className="flex overflow-auto gap-1 sm:gap-2">
               {albumsData.map((item, index) => (
                 <AlbumItem
                   key={index}
@@ -142,32 +142,32 @@ const DisplayHome = () => {
           </div>
           <div className="mb-4">
             <h1 className="my-5 font-bold text-2xl">Recommended Artists</h1>
-            <div className="flex overflow-x-auto gap-4 pb-4">
+            <div className="flex overflow-x-auto gap-2 sm:gap-4 pb-2 sm:pb-4">
               {randomArtists.map((item, index) => (
                 <div
                   key={index}
-                  className="flex flex-col items-start flex-shrink-0"
+                  className="flex flex-col items-start flex-shrink-0 min-w-0"
                 >
                   <img
                     src={item.profile}
                     alt={item.name}
                     onClick={() => navigate(`/artist/${item.id}`)}
-                    className="w-36 h-36 rounded-full object-cover mb-2 cursor-pointer"
+                    className="w-20 h-20 sm:w-28 sm:h-28 md:w-36 md:h-36 rounded-full object-cover mb-2 cursor-pointer"
                   />
                   <p
-                    className="font-medium hover:underline cursor-pointer"
+                    className="font-medium hover:underline cursor-pointer truncate max-w-[5rem] sm:max-w-[7rem] lg:max-w-[10rem]"
                     onClick={() => navigate(`/artist/${item.id}`)}
                   >
                     {item.name}
                   </p>
-                  <p className="font-normal text-gray-300">Artist</p>
+                  <p className="font-normal text-gray-300 text-sm">Artist</p>
                 </div>
               ))}
             </div>
           </div>
           <div className="mb-4">
             <h1 className="my-5 font-bold text-2xl">Recommended Songs</h1>
-            <div className="flex overflow-auto">
+            <div className="flex overflow-auto gap-1 sm:gap-2">
               {randomSongs.map((item, index) => (
                 <SongItem
                   key={index}

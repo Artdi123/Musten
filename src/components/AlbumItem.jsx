@@ -20,11 +20,19 @@ const AlbumItem = ({ image, name, desc, id, songsData }) => {
   return (
     <div
       onClick={handleAlbumClick}
-      className="min-w-[180px] p-2 px-3 rounded cursor-pointer hover:bg-[#ffffff26]"
+      className="min-w-[120px] sm:min-w-[200px] p-2 px-1 sm:px-3 rounded cursor-pointer hover:bg-[#ffffff26]"
     >
-      <img className="rounded" src={image} alt={name} />
-      <p className="font-bold mt-2 mb-1">{name}</p>
-      <p className="text-slate-200 text-sm">{desc}</p>
+      <img
+        className="rounded w-28 h-28 sm:w-44 sm:h-44 md:w-44 md:h-44 lg:w-[200px] object-cover"
+        src={image}
+        alt={name}
+      />
+      <p className="font-bold mt-2 mb-1 truncate max-w-[9rem] sm:max-w-[10rem]">
+        {name}
+      </p>
+      <p className="text-slate-200 text-sm truncate max-w-[9rem] sm:max-w-[10rem]">
+        {desc}
+      </p>
     </div>
   );
 };

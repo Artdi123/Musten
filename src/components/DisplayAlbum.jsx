@@ -233,17 +233,23 @@ const DisplayAlbum = () => {
   return (
     <>
       <Navbar />
-      <div className="mt-10 flex gap-8 flex-col md:flex-row md:items-end">
-        <img className="w-48 rounded" src={albumData.image} alt="" />
+      <div className="mt-10 flex gap-4 md:gap-8 flex-col md:flex-row md:items-end">
+        <div className="flex items-center justify-center sm:justify-start">
+          <img
+          className="w-48 h-48 rounded object-cover"
+          src={albumData.image}
+          alt=""
+          />
+        </div>
         <div className="flex flex-col">
           <p> Playlist </p>
-          <h2 className="text-5xl font-bold mb-4 md:text-7xl">
+          <h2 className="text-3xl font-bold mb-4 md:text-6xl">
             {albumData.name}
           </h2>
           <h4>{albumData.desc}</h4>
           <p className="mt-3">
             <img
-              className="inline-block w-8 h-8 rounded-full cursor-pointer"
+              className="inline-block w-6 h-6 sm:w-8 sm:h-8 rounded-full cursor-pointer"
               src={userData.profilePicture} // Use userData.profilePicture
               alt=""
               onClick={() => navigate("/profile")}
@@ -304,7 +310,7 @@ const DisplayAlbum = () => {
 
         {/* Search input and List icons on the right */}
         <div className="flex items-center gap-4">
-          <div className="relative w-36 sm:w-64">
+          <div className="relative w-32 sm:w-64">
             <input
               type="text"
               placeholder="Search in album..."
@@ -389,19 +395,25 @@ const DisplayAlbum = () => {
           <div
             onClick={() => playWithId(item.id, albumSongs, albumData.id)}
             key={index}
-            className="grid grid-cols-1 sm:grid-cols-3 gap-2 p-2 items-center text-[#a7a7a7] text-sm hover:bg-[#ffffff26] cursor-pointer"
+            className="grid grid-cols-1 sm:grid-cols-3 gap-2 sm:gap-4 p-2 items-center text-[#a7a7a7] text-sm hover:bg-[#ffffff26] cursor-pointer"
           >
-            <div className="flex items-center w-full">
-              <b className="mr-4 text-[#a7a7a7] w-4">{index + 1}</b>
-              <img className="w-10 h-10 mr-3 rounded" src={item.image} alt="" />
-              <div className="flex-1 min-w-0 sm:truncate">
-                <p className="text-white sm:truncate">{item.name}</p>
-                <p className="text-xs text-gray-400 sm:truncate">
-                  {item.artist}
-                </p>
+            <div className="flex items-center w-full gap-2 min-w-0">
+              <b className="mr-2 sm:mr-4 text-[#a7a7a7] w-4 flex-shrink-0 text-center">
+                {index + 1}
+              </b>
+              <img
+                className="w-10 h-10 sm:w-12 sm:h-12 mr-2 sm:mr-3 rounded object-cover flex-shrink-0"
+                src={item.image}
+                alt=""
+              />
+              <div className="flex-1 min-w-0">
+                <p className="text-white truncate">{item.name}</p>
+                <p className="text-xs text-gray-400 truncate">{item.artist}</p>
               </div>
             </div>
-            <p className="hidden sm:block text-[15px]">{getSongAlbum(item)}</p>
+            <p className="hidden sm:block text-[15px] truncate">
+              {getSongAlbum(item)}
+            </p>
             <p className="hidden sm:block text-[15px] text-center">
               {item.duration}
             </p>
