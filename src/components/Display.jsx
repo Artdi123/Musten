@@ -11,7 +11,7 @@ const Display = ({ showRightSidebar = false }) => {
   const location = useLocation();
   const isAlbum = location.pathname.includes("album");
   const isArtist = location.pathname.includes("artist");
-  const isProfile = location.pathname.includes("profile"); 
+  const isProfile = location.pathname.includes("profile");
 
   let bgColor = "#121212"; // Default background color
 
@@ -29,7 +29,7 @@ const Display = ({ showRightSidebar = false }) => {
     // }
   } else if (isProfile) {
     // Set a specific background for the profile page if desired
-    bgColor = "#1A1A1A"; 
+    bgColor = "#1A1A1A";
   }
 
   useEffect(() => {
@@ -43,10 +43,8 @@ const Display = ({ showRightSidebar = false }) => {
   return (
     <div
       ref={displayRef}
-      className={`m-2 px-6 pt-4 rounded bg-[#121212] text-white overflow-auto flex-1 ${
-        showRightSidebar 
-          ? "" 
-          : ""
+      className={`m-2 px-6 pt-4 rounded bg-[#121212] text-white overflow-auto flex-1 pb-28 lg:pb-0 ${
+        showRightSidebar ? "" : ""
       }`}
     >
       <Routes>

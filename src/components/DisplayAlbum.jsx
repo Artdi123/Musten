@@ -1,6 +1,6 @@
 // FileName: /DisplayAlbum.jsx
 import React, { useContext, useCallback, useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom"; 
+import { useNavigate } from "react-router-dom";
 import Navbar from "./Navbar";
 import { useParams } from "react-router-dom";
 import {
@@ -44,27 +44,26 @@ const DisplayAlbum = () => {
     if (song.album) {
       return song.album;
     }
-    
+
     // Check if song has "Hatsune Miku" as a singer
     if (song.singer && song.singer.includes("Hatsune Miku")) {
       return "Hatsune Miku Album";
     }
-    
+
     // Check if song has "Hatsune Miku" in the artist field
     if (song.artist && song.artist.includes("Hatsune Miku")) {
       return "Hatsune Miku Album";
     }
-    
+
     if (song.artist === "Camellia") {
       return "Camellia Album";
-    }
-      else if (song.artist === "XI") {
-        return "XI Album";
+    } else if (song.artist === "XI") {
+      return "XI Album";
     } else if (song.artist === "t+pazolite") {
       return "t+pazolite Album";
-    } else if (projectsekaiSongs.some(ps => ps.id === song.id)) {
+    } else if (projectsekaiSongs.some((ps) => ps.id === song.id)) {
       return "Project Sekai Song Album";
-    } else if (jpopSongs.some(js => js.id === song.id)) {
+    } else if (jpopSongs.some((js) => js.id === song.id)) {
       return "Jpop & Other Album";
     } else {
       return "Liked Song";
@@ -253,7 +252,7 @@ const DisplayAlbum = () => {
               className="ml-3 font-semibold cursor-pointer hover:underline"
               onClick={() => navigate("/profile")}
             >
-              {userData.name} 
+              {userData.name}
             </b>{" "}
             •
             <b className="font-normal">
@@ -305,13 +304,13 @@ const DisplayAlbum = () => {
 
         {/* Search input and List icons on the right */}
         <div className="flex items-center gap-4">
-          <div className="relative">
+          <div className="relative w-36 sm:w-64">
             <input
               type="text"
               placeholder="Search in album..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="bg-[#ffffff26] text-white rounded-full pl-4 pr-10 py-2 focus:outline-none w-48 md:w-64"
+              className="bg-[#ffffff26] text-white rounded-full pl-4 pr-10 py-2 focus:outline-none w-full"
             />
             <img
               src={assets.search_icon}
@@ -373,12 +372,16 @@ const DisplayAlbum = () => {
         </div>
       </div>
 
-      <div className="grid grid-cols-2 sm:grid-cols-3 mt-10 mb-4 pl-2 text-[#a7a7a7]">
+      <div className="grid grid-cols-1 sm:grid-cols-3 mt-10 mb-4 pl-2 text-[#a7a7a7]">
         <p>
           <b className="mr-4">#</b>Title
         </p>
-        <p>Album</p>
-        <img className="m-auto w-4" src={assets.clock_icon} alt="" />
+        <p className="hidden sm:block">Album</p>
+        <img
+          className="hidden sm:block m-auto w-4"
+          src={assets.clock_icon}
+          alt=""
+        />
       </div>
       <hr />
       {(searchQuery ? filteredSongs : sortSongs(albumSongs)).map(
@@ -386,18 +389,22 @@ const DisplayAlbum = () => {
           <div
             onClick={() => playWithId(item.id, albumSongs, albumData.id)}
             key={index}
-            className="grid grid-cols-2 sm:grid-cols-3 gap-2 p-2 items-center text-[#a7a7a7] text-sm hover:bg-[#ffffff26] cursor-pointer"
+            className="grid grid-cols-1 sm:grid-cols-3 gap-2 p-2 items-center text-[#a7a7a7] text-sm hover:bg-[#ffffff26] cursor-pointer"
           >
-            <div className="flex items-center">
+            <div className="flex items-center w-full">
               <b className="mr-4 text-[#a7a7a7] w-4">{index + 1}</b>
               <img className="w-10 h-10 mr-3 rounded" src={item.image} alt="" />
-              <div className="w-52 truncate">
-                <p className="text-white truncate">{item.name}</p>
-                <p className="text-xs text-gray-400 truncate">{item.artist}</p>
+              <div className="flex-1 min-w-0 sm:truncate">
+                <p className="text-white sm:truncate">{item.name}</p>
+                <p className="text-xs text-gray-400 sm:truncate">
+                  {item.artist}
+                </p>
               </div>
             </div>
-            <p className="text-[15px]">{getSongAlbum(item)}</p>
-            <p className="text-[15px] text-center">{item.duration}</p>
+            <p className="hidden sm:block text-[15px]">{getSongAlbum(item)}</p>
+            <p className="hidden sm:block text-[15px] text-center">
+              {item.duration}
+            </p>
           </div>
         )
       )}

@@ -7,7 +7,14 @@ import Queue from "./components/Queue.jsx";
 import { PlayerContext } from "./context/PlayerContext";
 
 const App = () => {
-  const { audioRef, track, currentPlaylist, playWithId, currentAlbumSongs, currentAlbumId } = useContext(PlayerContext);
+  const {
+    audioRef,
+    track,
+    currentPlaylist,
+    playWithId,
+    currentAlbumSongs,
+    currentAlbumId,
+  } = useContext(PlayerContext);
   const [showView, setShowView] = useState(false);
   const [showQueue, setShowQueue] = useState(false);
 
@@ -32,10 +39,10 @@ const App = () => {
           </div>
         )}
       </div>
-      <Player 
-        showView={showView} 
+      <Player
+        showView={showView}
         setShowView={setShowView}
-        showQueue={showQueue} 
+        showQueue={showQueue}
         setShowQueue={setShowQueue}
       />
       <audio ref={audioRef} src={track.file} preload="auto"></audio>

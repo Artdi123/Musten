@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useState, useContext } from "react";
 import { assets } from "../assets/assets";
 import { PlayerContext } from "../context/PlayerContext";
@@ -33,7 +34,7 @@ const Player = ({ showView, setShowView, showQueue, setShowQueue }) => {
   return (
     <>
       {/* Main Player Controls - Ensure this has a z-index */}
-      <div className="h-[10%] bg-black flex justify-between items-center px-4 text-white relative z-20">
+      <div className="h-[10%] bg-black flex justify-between items-center px-4 text-white fixed bottom-0 inset-x-0 z-40 lg:relative lg:z-20">
         {" "}
         {/* Added relative z-20 */}
         <div className="hidden lg:flex items-center gap-4">
@@ -175,7 +176,7 @@ const Player = ({ showView, setShowView, showQueue, setShowQueue }) => {
         <div
           className={`fixed top-0 h-[90%] bg-[#121212] z-50 overflow-y-auto border-r-8 border-black ${
             showFullScreen
-              ? "left-0 w-[20%] shadow-2xl" // Styles when full screen is on 
+              ? "left-0 w-[20%] shadow-2xl" // Styles when full screen is on
               : "left-[20%] w-[60%]" // Adjusted to cover main display area
           }`}
         >
@@ -197,6 +198,23 @@ const Player = ({ showView, setShowView, showQueue, setShowQueue }) => {
             showQueue={showQueue}
             setShowQueue={setShowQueue}
           />
+        </div>
+      )}
+
+      {/* Mobile Now Playing Popup */}
+      {playStatus && (
+        <div className="lg:hidden fixed inset-x-0 bottom-[11%] z-50 flex justify-center pointer-events-none">
+          <div className="pointer-events-auto mx-5 bg-blue-500 text-white rounded shadow-lg px-3 py-2 flex items-center gap-3 w-full">
+            <img
+              src={track.image}
+              alt="cover"
+              className="w-10 h-10 rounded object-cover"
+            />
+            <div className="min-w-0 flex-1">
+              <p className="text-sm font-semibold truncate">{track.name}</p>
+              <p className="text-xs opacity-90 truncate">{track.artist}</p>
+            </div>
+          </div>
         </div>
       )}
     </>

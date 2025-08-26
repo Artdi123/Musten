@@ -16,7 +16,7 @@ import EditProfileModal from "../components/EditProfileModal";
 const DisplayProfile = () => {
   const { setGlobalSearchQuery, playWithId, userData, setUserData } =
     useContext(PlayerContext); // Consume userData and setUserData
-  
+
   const navigate = useNavigate();
 
   const [showEditModal, setShowEditModal] = useState(false);
@@ -113,14 +113,22 @@ const DisplayProfile = () => {
           {topArtistsThisMonth.length > 0 ? (
             <div className="flex overflow-x-auto gap-4 pb-4">
               {topArtistsThisMonth.map((artist, index) => (
-                <div key={index} className="flex flex-col items-start ">
+                <div
+                  key={index}
+                  className="flex flex-col items-start flex-shrink-0 "
+                >
                   <img
                     src={artist.profile}
                     alt={artist.name}
                     onClick={() => navigate(`/artist/${artist.id}`)}
                     className="w-36 h-36 rounded-full object-cover mb-2 cursor-pointer"
                   />
-                  <p className="font-medium hover:underline cursor-pointer" onClick={() => navigate(`/artist/${artist.id}`)}>{artist.name}</p>
+                  <p
+                    className="font-medium hover:underline cursor-pointer"
+                    onClick={() => navigate(`/artist/${artist.id}`)}
+                  >
+                    {artist.name}
+                  </p>
                   <p className="font-normal text-gray-300">Artist</p>
                 </div>
               ))}
@@ -154,11 +162,11 @@ const DisplayProfile = () => {
                       className="w-12 h-12 rounded object-cover"
                     />
                     <div>
-                      <p className="font-medium">{song.name}</p>
-                      <p className="text-gray-400 text-sm">{song.artist}</p>
+                      <p className="font-medium truncate w-48">{song.name}</p>
+                      <p className="text-gray-400 text-sm truncate w-48">{song.artist}</p>
                     </div>
                   </div>
-                  <p className="text-gray-400 text-sm">{song.duration}</p> 
+                  <p className="text-gray-400 text-sm hidden sm:block">{song.duration}</p>
                 </div>
               ))}
             </div>
