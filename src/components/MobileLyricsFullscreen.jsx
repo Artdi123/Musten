@@ -92,15 +92,17 @@ const MobileLyricsFullscreen = ({ track, onClose }) => {
   return (
     <div className="fixed inset-0 bg-black z-[60] flex flex-col">
       {/* Header */}
-      <div className="flex items-center justify-between px-4 py-6">
-        <button onClick={onClose} className="text-white text-2xl font-bold">
+      <div className="relative flex items-center justify-center px-4 py-6">
+        <button
+          onClick={onClose}
+          className="absolute left-4 text-white text-2xl font-bold"
+        >
           ×
         </button>
-        <div className="text-center flex-1">
+        <div className="text-center">
           <h1 className="text-white text-lg font-semibold">Lyrics</h1>
           <h2 className="text-white text-sm opacity-80">{track.name}</h2>
         </div>
-        <div className="w-8"></div> {/* Spacer for centering */}
       </div>
 
       {/* Lyrics Content - Takes most of the space */}

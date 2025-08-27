@@ -59,11 +59,14 @@ const MobileFullScreenPlayer = ({ onClose }) => {
     <>
       <div className="fixed inset-0 bg-black z-50 flex flex-col overflow-y-auto">
         {/* Header */}
-        <div className="flex items-center justify-between px-4 py-12">
-          <button onClick={onClose} className="text-white text-2xl font-bold">
+        <div className="relative flex items-center justify-center px-4 py-12">
+          <button
+            onClick={onClose}
+            className="absolute left-4 text-white text-2xl font-bold"
+          >
             ×
           </button>
-          <div className="text-center flex-1">
+          <div className="text-center">
             <h1 className="text-white text-sm font-medium opacity-80">
               Now playing from your album
             </h1>
@@ -71,7 +74,6 @@ const MobileFullScreenPlayer = ({ onClose }) => {
               {currentAlbum ? currentAlbum.name : "Unknown Album"}
             </h2>
           </div>
-          <div className="w-8"></div> {/* Spacer for centering */}
         </div>
 
         {/* Song Cover */}
