@@ -1,3 +1,4 @@
+// src/components/DisplayArtist.jsx
 // ... (existing imports)
 import React, { useContext, useCallback, useState, useEffect } from "react";
 import Navbar from "./Navbar";
@@ -11,6 +12,7 @@ import {
 } from "../assets/assets";
 import { PlayerContext } from "../context/PlayerContext";
 import ArtistAboutModal from "./ArtistAboutModal";
+import MobileArtistAbout from "./ArtistAbout"; // Import the new component
 
 const DisplayArtist = () => {
   const { id } = useParams();
@@ -33,6 +35,7 @@ const DisplayArtist = () => {
   const [showSortOptions, setShowSortOptions] = useState(false);
   const [sortBy, setSortBy] = useState("default");
   const [showArtistModal, setShowArtistModal] = useState(false);
+  const [showMobileArtistAbout, setShowMobileArtistAbout] = useState(false); // New state for mobile about page
 
   useEffect(() => {
     setGlobalSearchQuery("");
@@ -190,6 +193,9 @@ const DisplayArtist = () => {
     // Only show modal on large screens
     if (window.innerWidth >= 1024) {
       setShowArtistModal(true);
+    } else {
+      // On mobile, show the new mobile about page
+      setShowMobileArtistAbout(true);
     }
   };
 
@@ -430,12 +436,20 @@ const DisplayArtist = () => {
         </div>
       </div>
 
-      {/* Artist About Modal */}
+      {/* Artist About Modal (for desktop) */}
       <ArtistAboutModal
         artist={artistInfo}
         isOpen={showArtistModal}
         onClose={() => setShowArtistModal(false)}
       />
+
+      {/* Mobile Artist About Page */}
+      {showMobileArtistAbout && (
+        <MobileArtistAbout
+          artist={artistInfo}
+          onClose={() => setShowMobileArtistAbout(false)}
+        />
+      )}
     </>
   );
 };

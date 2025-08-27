@@ -1,3 +1,4 @@
+// src/components/View.jsx
 // FileName: /View.jsx
 import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -9,11 +10,13 @@ import {
   jpopSongs,
 } from "../assets/assets";
 import ArtistAboutModal from "./ArtistAboutModal";
+import MobileArtistAbout from "./ArtistAbout"; // Import the new component
 
 const View = () => {
   const { track, currentPlaylist, playWithId } = useContext(PlayerContext);
   const navigate = useNavigate();
   const [showArtistModal, setShowArtistModal] = useState(false);
+  const [showMobileArtistAbout, setShowMobileArtistAbout] = useState(false); // New state for mobile about page
 
   // Find matching artist data
   const getArtistData = () => {
@@ -96,8 +99,8 @@ const View = () => {
     if (window.innerWidth >= 1024) {
       setShowArtistModal(true);
     } else {
-      // On mobile, go directly to artist page
-      navigate(`/artist/${artist.id}`);
+      // On mobile, show the new mobile about page
+      setShowMobileArtistAbout(true);
     }
   };
 
@@ -175,12 +178,20 @@ const View = () => {
         )}
       </div>
 
-      {/* Artist About Modal */}
+      {/* Artist About Modal (for desktop) */}
       <ArtistAboutModal
         artist={artist}
         isOpen={showArtistModal}
         onClose={() => setShowArtistModal(false)}
       />
+
+      {/* Mobile Artist About Page */}
+      {showMobileArtistAbout && (
+        <MobileArtistAbout
+          artist={artist}
+          onClose={() => setShowMobileArtistAbout(false)}
+        />
+      )}
     </div>
   );
 };
