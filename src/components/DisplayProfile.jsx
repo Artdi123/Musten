@@ -124,7 +124,7 @@ const DisplayProfile = () => {
                     className="w-20 h-20 sm:w-28 sm:h-28 md:w-36 md:h-36 rounded-full object-cover mb-2 cursor-pointer"
                   />
                   <p
-                    className="font-medium hover:underline cursor-pointer"
+                    className="font-medium hover:underline cursor-pointer truncate w-20 md:w-32"
                     onClick={() => navigate(`/artist/${artist.id}`)}
                   >
                     {artist.name}
@@ -162,7 +162,9 @@ const DisplayProfile = () => {
                       className="w-12 h-12 rounded object-cover"
                     />
                     <div>
-                      <p className="font-medium truncate w-32 sm:w-52">{song.name}</p>
+                      <p className="font-medium truncate w-32 sm:w-52">
+                        {song.name}
+                      </p>
                       <p className="text-gray-400 text-sm truncate w-32 sm:w-52">
                         {song.artist}
                       </p>

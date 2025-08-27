@@ -198,11 +198,11 @@ const DisplayArtist = () => {
       <Navbar />
       <div className="mt-10 flex gap-4 md:gap-8 flex-col md:flex-row md:items-end">
         <div className="flex items-center justify-center sm:justify-start">
-        <img
-          className="w-48 h-48 rounded-full object-cover"
-          src={artistInfo.profile}
-          alt={artistInfo.name}
-        />
+          <img
+            className="w-48 h-48 rounded-full object-cover"
+            src={artistInfo.profile}
+            alt={artistInfo.name}
+          />
         </div>
         <div className="flex flex-col">
           <p> Artist </p>

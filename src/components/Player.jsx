@@ -4,10 +4,12 @@ import { assets } from "../assets/assets";
 import { PlayerContext } from "../context/PlayerContext";
 import LyricsDisplay from "./Lyrics";
 import FullScreenPlayer from "./FullScreenPlayer";
+import MobileFullScreenPlayer from "./MobileFullScreenPlayer";
 
 const Player = ({ showView, setShowView, showQueue, setShowQueue }) => {
   const [showLyrics, setShowLyrics] = useState(false);
   const [showFullScreen, setShowFullScreen] = useState(false); // New state for full screen
+  const [showMobileFullScreen, setShowMobileFullScreen] = useState(false); // New state for mobile full screen
   const {
     track,
     seekBar,
@@ -203,8 +205,11 @@ const Player = ({ showView, setShowView, showQueue, setShowQueue }) => {
 
       {/* Mobile Now Playing Popup */}
       {playStatus && (
-        <div className="lg:hidden fixed inset-x-0 bottom-[11%] z-50 flex justify-center pointer-events-none">
-          <div className="pointer-events-auto mx-5 bg-blue-500 text-white rounded shadow-lg px-3 py-2 flex items-center gap-3 w-full">
+        <div className="lg:hidden fixed inset-x-0 bottom-[11%] z-50 flex justify-center pointer-events-none mx-4">
+          <div
+            onClick={() => setShowMobileFullScreen(true)}
+            className="pointer-events-auto mx-5 bg-blue-500 text-white rounded shadow-lg px-3 py-2 flex items-center gap-3 w-full cursor-pointer hover:bg-blue-600 transition-colors"
+          >
             <img
               src={track.image}
               alt="cover"
@@ -216,6 +221,13 @@ const Player = ({ showView, setShowView, showQueue, setShowQueue }) => {
             </div>
           </div>
         </div>
+      )}
+
+      {/* Mobile Full Screen Player */}
+      {showMobileFullScreen && (
+        <MobileFullScreenPlayer
+          onClose={() => setShowMobileFullScreen(false)}
+        />
       )}
     </>
   );

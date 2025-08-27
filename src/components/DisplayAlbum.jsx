@@ -236,9 +236,9 @@ const DisplayAlbum = () => {
       <div className="mt-10 flex gap-4 md:gap-8 flex-col md:flex-row md:items-end">
         <div className="flex items-center justify-center sm:justify-start">
           <img
-          className="w-48 h-48 rounded object-cover"
-          src={albumData.image}
-          alt=""
+            className="w-48 h-48 rounded object-cover"
+            src={albumData.image}
+            alt=""
           />
         </div>
         <div className="flex flex-col">
