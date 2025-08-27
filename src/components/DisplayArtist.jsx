@@ -10,6 +10,7 @@ import {
   jpopSongs,
 } from "../assets/assets";
 import { PlayerContext } from "../context/PlayerContext";
+import ArtistAboutModal from "./ArtistAboutModal";
 
 const DisplayArtist = () => {
   const { id } = useParams();
@@ -31,6 +32,7 @@ const DisplayArtist = () => {
   const [filteredSongs, setFilteredSongs] = useState([]);
   const [showSortOptions, setShowSortOptions] = useState(false);
   const [sortBy, setSortBy] = useState("default");
+  const [showArtistModal, setShowArtistModal] = useState(false);
 
   useEffect(() => {
     setGlobalSearchQuery("");
@@ -184,6 +186,13 @@ const DisplayArtist = () => {
     setShowSortOptions(false);
   };
 
+  const handleAboutCardClick = () => {
+    // Only show modal on large screens
+    if (window.innerWidth >= 1024) {
+      setShowArtistModal(true);
+    }
+  };
+
   if (!artistInfo) {
     return (
       <>
@@ -213,7 +222,7 @@ const DisplayArtist = () => {
           <p className="mt-3">
             <b className="font-normal">
               {" "}
-              • <b></b>
+              â€¢ <b></b>
               {
                 (searchQuery ? filteredSongs : sortSongs(artistSongs)).length
               }{" "}
@@ -380,7 +389,14 @@ const DisplayArtist = () => {
 
       {/* About the Artist Section */}
       <h2 className="text-2xl font-bold mb-4 mt-10">About</h2>
-      <div className="mb-10 p-6 bg-[#1f1e1e] rounded-lg w-full md:w-[900px]">
+      <div
+        className={`mb-10 p-6 bg-[#1f1e1e] rounded-lg w-full md:w-[900px] ${
+          window.innerWidth >= 1024
+            ? "cursor-pointer hover:bg-[#2a2929] transition-colors duration-200"
+            : ""
+        }`}
+        onClick={handleAboutCardClick}
+      >
         <div className="flex items-center mb-4">
           <img
             src={artistInfo.profile}
@@ -391,10 +407,35 @@ const DisplayArtist = () => {
         <div>
           <p className="text-lg font-semibold mt-2">{artistInfo.Listener}</p>
         </div>
-        <p className="text-gray-300 leading-relaxed mt-2">
-          {artistInfo.desc || "No description available for this artist."}
-        </p>
+        <div className="text-gray-300 leading-relaxed mt-2">
+          <p
+            className="overflow-hidden"
+            style={{
+              display: "-webkit-box",
+              WebkitLineClamp: 3,
+              WebkitBoxOrient: "vertical",
+              lineHeight: "1.5",
+              maxHeight: "calc(3 * 1.5em)",
+            }}
+          >
+            {artistInfo.desc || "No description available for this artist."}
+          </p>
+          {artistInfo.desc &&
+            artistInfo.desc.length > 150 &&
+            window.innerWidth >= 1024 && (
+              <p className="text-blue-400 text-sm mt-2 cursor-pointer hover:underline">
+                Show more
+              </p>
+            )}
+        </div>
       </div>
+
+      {/* Artist About Modal */}
+      <ArtistAboutModal
+        artist={artistInfo}
+        isOpen={showArtistModal}
+        onClose={() => setShowArtistModal(false)}
+      />
     </>
   );
 };

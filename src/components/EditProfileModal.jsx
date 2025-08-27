@@ -34,7 +34,7 @@ const EditProfileModal = ({
   };
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50">
+    <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
       <div className="bg-[#282828] p-8 rounded-lg shadow-lg w-full max-w-md relative">
         <h2 className="text-2xl font-bold text-white mb-6">Edit Profile</h2>
 

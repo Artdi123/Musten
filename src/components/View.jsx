@@ -1,5 +1,5 @@
 // FileName: /View.jsx
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { PlayerContext } from "../context/PlayerContext";
 import {
@@ -8,10 +8,12 @@ import {
   projectsekaiSongs,
   jpopSongs,
 } from "../assets/assets";
+import ArtistAboutModal from "./ArtistAboutModal";
 
 const View = () => {
-  const { track, currentPlaylist, playWithId } = useContext(PlayerContext); 
+  const { track, currentPlaylist, playWithId } = useContext(PlayerContext);
   const navigate = useNavigate();
+  const [showArtistModal, setShowArtistModal] = useState(false);
 
   // Find matching artist data
   const getArtistData = () => {
@@ -43,22 +45,22 @@ const View = () => {
     if (song.album) {
       return song.album;
     }
-    
+
     // Check if song has "Hatsune Miku" as a singer
     if (song.singer && song.singer.includes("Hatsune Miku")) {
       return "Hatsune Miku Album";
     }
-    
+
     // Check if song has "Hatsune Miku" in the artist field
     if (song.artist && song.artist.includes("Hatsune Miku")) {
       return "Hatsune Miku Album";
     }
-    
+
     if (song.artist === "Camellia") {
       return "Camellia Album";
-    } else if (projectsekaiSongs.some(ps => ps.id === song.id)) {
+    } else if (projectsekaiSongs.some((ps) => ps.id === song.id)) {
       return "Project Sekai Song Album";
-    } else if (jpopSongs.some(js => js.id === song.id)) {
+    } else if (jpopSongs.some((js) => js.id === song.id)) {
       return "Jpop & Other Album";
     } else {
       return "Liked Song";
@@ -71,7 +73,7 @@ const View = () => {
     if (track.album) {
       return albumsData.find((album) => album.name === track.album);
     }
-    
+
     // Use the getSongAlbum function to determine the album
     const albumName = getSongAlbum(track);
     return albumsData.find((album) => album.name === albumName);
@@ -89,11 +91,19 @@ const View = () => {
       ? currentPlaylist[currentIndex + 1]
       : null;
 
+  const handleArtistCardClick = () => {
+    // Only show modal on large screens
+    if (window.innerWidth >= 1024) {
+      setShowArtistModal(true);
+    } else {
+      // On mobile, go directly to artist page
+      navigate(`/artist/${artist.id}`);
+    }
+  };
+
   return (
     <div className="w-full bg-[#121212] h-full overflow-y-auto p-4 text-white">
-      <h1 className="text-xl font-bold mb-4">
-        {album?.name || "Now Playing"}
-      </h1>
+      <h1 className="text-xl font-bold mb-4">{album?.name || "Now Playing"}</h1>
 
       <div className="flex flex-col items-start justify-center mb-6">
         <img
@@ -107,13 +117,13 @@ const View = () => {
         <p className="text-gray-400 text-sm truncate w-full">{track.artist}</p>
       </div>
 
-      <div className="mb-6 p-3 bg-[#1f1e1e] rounded">
+      <div
+        className="mb-6 p-3 bg-[#1f1e1e] rounded cursor-pointer hover:bg-[#2a2929] transition-colors duration-200"
+        onClick={handleArtistCardClick}
+      >
         <h3 className="text-base font-bold mb-3">About the artist</h3>
         <div className="flex items-center mb-3">
-          <div
-            className="cursor-pointer"
-            onClick={() => navigate(`/artist/${artist.id}`)}
-          >
+          <div>
             <img
               src={artist.profile}
               alt={artist.name}
@@ -123,7 +133,10 @@ const View = () => {
           <div className="min-w-0 flex-1">
             <h4
               className="font-bold truncate cursor-pointer hover:underline"
-              onClick={() => navigate(`/artist/${artist.id}`)}
+              onClick={(e) => {
+                e.stopPropagation();
+                navigate(`/artist/${artist.id}`);
+              }}
             >
               {artist.name}
             </h4>
@@ -161,6 +174,13 @@ const View = () => {
           <p className="text-gray-400 text-sm">No more songs in queue.</p>
         )}
       </div>
+
+      {/* Artist About Modal */}
+      <ArtistAboutModal
+        artist={artist}
+        isOpen={showArtistModal}
+        onClose={() => setShowArtistModal(false)}
+      />
     </div>
   );
 };
