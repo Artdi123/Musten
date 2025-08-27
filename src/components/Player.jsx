@@ -205,7 +205,7 @@ const Player = ({ showView, setShowView, showQueue, setShowQueue }) => {
 
       {/* Mobile Now Playing Popup */}
       {playStatus && (
-        <div className="lg:hidden fixed inset-x-0 bottom-[11%] z-50 flex justify-center pointer-events-none mx-4">
+        <div className="lg:hidden fixed inset-x-0 bottom-[11%] z-50 flex justify-center pointer-events-none">
           <div
             onClick={() => setShowMobileFullScreen(true)}
             className="pointer-events-auto mx-5 bg-blue-500 text-white rounded shadow-lg px-3 py-2 flex items-center gap-3 w-full cursor-pointer hover:bg-blue-600 transition-colors"
@@ -216,8 +216,8 @@ const Player = ({ showView, setShowView, showQueue, setShowQueue }) => {
               className="w-10 h-10 rounded object-cover"
             />
             <div className="min-w-0 flex-1">
-              <p className="text-sm font-semibold truncate">{track.name}</p>
-              <p className="text-xs opacity-90 truncate">{track.artist}</p>
+              <p className="text-sm font-semibold truncate w-64 sm:w-full">{track.name}</p>
+              <p className="text-xs opacity-90 truncate w-64 sm:w-full">{track.artist}</p>
             </div>
           </div>
         </div>

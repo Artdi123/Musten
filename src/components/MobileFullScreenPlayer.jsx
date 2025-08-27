@@ -54,9 +54,11 @@ const MobileFullScreenPlayer = ({ onClose }) => {
       </div>
 
       {/* Song Info */}
-      <div className="px-8 mb-12">
+      <div className="px-8 mb-8">
         <div className="text-left">
-          <h3 className="text-white text-xl font-bold mb-2 truncate">{track.name}</h3>
+          <h3 className="text-white text-xl font-bold mb-2 truncate">
+            {track.name}
+          </h3>
           <p className="text-white text-lg opacity-80">{track.artist}</p>
         </div>
       </div>
