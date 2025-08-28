@@ -89,6 +89,18 @@ const MobileLyricsFullscreen = ({ track, onClose }) => {
     }
   };
 
+    const handleShuffleToggle = () => {
+      if (toggleShuffle) {
+        toggleShuffle();
+        console.log(
+          "Toggle shuffle called, new state should be:",
+          !isShuffleOn
+        );
+      } else {
+        console.error("toggleShuffle function not available in context");
+      }
+    };
+
   return (
     <div className="fixed inset-0 bg-black z-[60] flex flex-col">
       {/* Header */}
@@ -175,15 +187,19 @@ const MobileLyricsFullscreen = ({ track, onClose }) => {
 
         {/* Main Controls */}
         <div className="flex items-center justify-center gap-4">
-          <img
-            onClick={toggleShuffle}
-            className={`w-5 cursor-pointer ${
-              isShuffleOn ? "opacity-100" : "opacity-50"
-            }`}
-            src={assets.shuffle_icon}
-            alt="Shuffle"
-            title={isShuffleOn ? "Shuffle is on" : "Shuffle is off"}
-          />
+        <div className="relative">
+              <img
+                onClick={handleShuffleToggle}
+                className={`w-5 cursor-pointer transition-all duration-200 ${
+                  isShuffleOn
+                    ? "opacity-100 filter brightness-110"
+                    : "opacity-50 hover:opacity-70"
+                }`}
+                src={assets.shuffle_icon}
+                alt="Shuffle"
+                title={isShuffleOn ? "Shuffle is on" : "Shuffle is off"}
+              />
+            </div>
           <img
             onClick={previous}
             className="w-5 cursor-pointer"
