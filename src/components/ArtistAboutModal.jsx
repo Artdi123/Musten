@@ -19,7 +19,7 @@ const ArtistAboutModal = ({ artist, isOpen, onClose }) => {
 
   return (
     <div
-      className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4"
+      className="fixed inset-0 bg-black/50 flex items-center justify-center z-60 p-4"
       onClick={handleOverlayClick}
     >
       <div className="bg-[#1f1e1e] rounded-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto">
