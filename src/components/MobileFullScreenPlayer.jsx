@@ -55,6 +55,15 @@ const MobileFullScreenPlayer = ({ onClose }) => {
 
   const artist = getArtistData();
 
+  const handleShuffleToggle = () => {
+    if (toggleShuffle) {
+      toggleShuffle();
+      console.log("Toggle shuffle called, new state should be:", !isShuffleOn);
+    } else {
+      console.error("toggleShuffle function not available in context");
+    }
+  };
+
   return (
     <>
       <div className="fixed inset-0 bg-black z-50 flex flex-col overflow-y-auto">
@@ -132,55 +141,65 @@ const MobileFullScreenPlayer = ({ onClose }) => {
 
           {/* Main Controls */}
           <div className="flex items-center justify-center gap-4 mb-6">
-            <img
-              onClick={toggleShuffle}
-              className={`w-5 cursor-pointer ${
-                isShuffleOn ? "opacity-100" : "opacity-50"
-              }`}
-              src={assets.shuffle_icon}
-              alt="Shuffle"
-              title={isShuffleOn ? "Shuffle is on" : "Shuffle is off"}
-            />
+            <div className="relative">
+              <img
+                onClick={handleShuffleToggle}
+                className={`w-5 cursor-pointer transition-all duration-200 ${
+                  isShuffleOn
+                    ? "opacity-100 filter brightness-110"
+                    : "opacity-50 hover:opacity-70"
+                }`}
+                src={assets.shuffle_icon}
+                alt="Shuffle"
+                title={isShuffleOn ? "Shuffle is on" : "Shuffle is off"}
+              />
+            </div>
+
             <img
               onClick={previous}
-              className="w-5 cursor-pointer"
+              className="w-5 cursor-pointer hover:opacity-80 transition-opacity"
               src={assets.prev_icon}
-              alt=""
+              alt="Previous"
               title="Previous"
             />
             {playStatus ? (
               <img
                 onClick={pause}
-                className="w-5 cursor-pointer"
+                className="w-5 cursor-pointer hover:opacity-80 transition-opacity"
                 src={assets.pause_icon}
-                alt=""
+                alt="Pause"
                 title="Pause"
               />
             ) : (
               <img
                 onClick={play}
-                className="w-5 cursor-pointer"
+                className="w-5 cursor-pointer hover:opacity-80 transition-opacity"
                 src={assets.play_icon}
-                alt=""
+                alt="Play"
                 title="Play"
               />
             )}
             <img
               onClick={next}
-              className="w-5 cursor-pointer"
+              className="w-5 cursor-pointer hover:opacity-80 transition-opacity"
               src={assets.next_icon}
-              alt=""
+              alt="Next"
               title="Next"
             />
-            <img
-              onClick={toggleLoop}
-              className={`w-5 cursor-pointer ${
-                isLoopOn ? "opacity-100" : "opacity-50"
-              }`}
-              src={assets.loop_icon}
-              alt="Loop"
-              title={isLoopOn ? "Loop is on" : "Loop is off"}
-            />
+
+            <div className="relative">
+              <img
+                onClick={toggleLoop}
+                className={`w-5 cursor-pointer transition-all duration-200 ${
+                  isLoopOn
+                    ? "opacity-100 filter brightness-110"
+                    : "opacity-50 hover:opacity-70"
+                }`}
+                src={assets.loop_icon}
+                alt="Loop"
+                title={isLoopOn ? "Loop is on" : "Loop is off"}
+              />
+            </div>
           </div>
         </div>
 
@@ -233,7 +252,7 @@ const MobileFullScreenPlayer = ({ onClose }) => {
               About the artist
             </h4>
             <div
-              className="flex items-center mb-3 cursor-pointer"
+              className="flex items-center mb-3 cursor-pointer hover:bg-gray-700 rounded p-2 -m-2 transition-colors"
               onClick={() => {
                 navigate(`/artist/${artist.id}`);
                 onClose(); // Close the mobile fullscreen player
