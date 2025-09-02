@@ -26,7 +26,8 @@ import clock_icon from "./clock_icon.png";
 import profile_icon from "./Profile.jpg";
 import list_icon from "./list.png";
 import view_icon from "./view.png";
-import edit_icon from "./edit.png"
+import edit_icon from "./edit.png";
+import user_icon from "./user.png"
 
 //Albums
 import CamelliaAlbum from "./Camellia Album.jpeg";
@@ -379,6 +380,7 @@ export const assets = {
   list_icon,
   view_icon,
   edit_icon,
+  user_icon,
 };
 
 export const albumsData = [

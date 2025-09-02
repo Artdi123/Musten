@@ -40,32 +40,38 @@ const Sidebar = () => {
           </div>
         </div>
         <div className="p-4 overflow-y-auto h-[calc(100%-120px)]">
-          {albumsData.map((item, index) => {
-            // Check if the current track belongs to this album
-            const isAlbumPlaying = currentAlbumId === item.id;
-            const albumNameClass = isAlbumPlaying ? "text-blue-500" : "";
+          {localStorage.getItem('currentUser') ? (
+            albumsData.map((item, index) => {
+              // Check if the current track belongs to this album
+              const isAlbumPlaying = currentAlbumId === item.id;
+              const albumNameClass = isAlbumPlaying ? "text-blue-500" : "";
 
-            return (
-              <div
-                key={index}
-                onClick={() => {
-                  navigate(`/album/${item.id}`);
-                  setGlobalSearchQuery("");
-                }}
-                className="flex items-center gap-3 p-2 hover:bg-[#2a2a2a] rounded cursor-pointer"
-              >
-                <img
-                  src={item.image}
-                  alt={item.name}
-                  className="w-12 h-12 rounded object-cover"
-                />
-                <div>
-                  <p className={`font-medium ${albumNameClass}`}>{item.name}</p>
-                  <p className="text-gray-400 text-sm">{item.desc}</p>
+              return (
+                <div
+                  key={index}
+                  onClick={() => {
+                    navigate(`/album/${item.id}`);
+                    setGlobalSearchQuery("");
+                  }}
+                  className="flex items-center gap-3 p-2 hover:bg-[#2a2a2a] rounded cursor-pointer"
+                >
+                  <img
+                    src={item.image}
+                    alt={item.name}
+                    className="w-12 h-12 rounded object-cover"
+                  />
+                  <div>
+                    <p className={`font-medium ${albumNameClass}`}>{item.name}</p>
+                    <p className="text-gray-400 text-sm">{item.desc}</p>
+                  </div>
                 </div>
-              </div>
-            );
-          })}
+              );
+            })
+          ) : (
+            <div className="text-center text-gray-400 py-8">
+              <p>Please login to view your library</p>
+            </div>
+          )}
         </div>
       </div>
     </div>

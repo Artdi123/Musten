@@ -41,31 +41,46 @@ const DisplayProfile = () => {
 
   // Function to handle saving profile changes from the modal
   const handleSaveProfile = (newName, newProfilePic) => {
-    // eslint-disable-next-line no-unused-vars
-    let profilePicToSave = newProfilePic;
+    const updateUserData = (name, profilePic) => {
+      // Update context
+      setUserData((prevData) => ({
+        ...prevData,
+        name: name,
+        profilePicture: profilePic,
+      }));
+
+      // Update localStorage userName and userProfilePicture
+      localStorage.setItem("userName", name);
+      localStorage.setItem("userProfilePicture", profilePic);
+
+      // Update currentUser in localStorage
+      const currentUser = JSON.parse(localStorage.getItem("currentUser") || "{}");
+      if (currentUser) {
+        currentUser.name = name;
+        currentUser.profilePicture = profilePic;
+        localStorage.setItem("currentUser", JSON.stringify(currentUser));
+      }
+
+      // Update the user in the users array
+      const users = JSON.parse(localStorage.getItem("users") || "[]");
+      const userIndex = users.findIndex(user => user.email === currentUser.email);
+      if (userIndex !== -1) {
+        users[userIndex].name = name;
+        users[userIndex].profilePicture = profilePic;
+        localStorage.setItem("users", JSON.stringify(users));
+      }
+    };
 
     // If newProfilePic is a File object, convert it to a data URL
     if (newProfilePic instanceof File) {
       const reader = new FileReader();
       reader.onloadend = () => {
-        setUserData((prevData) => ({
-          ...prevData,
-          name: newName,
-          profilePicture: reader.result,
-        }));
-        localStorage.setItem("userName", newName);
-        localStorage.setItem("userProfilePicture", reader.result); // Save base64 string
+        updateUserData(newName, reader.result);
       };
       reader.readAsDataURL(newProfilePic);
     } else {
       // If it's already a URL string (e.g., default or previously saved)
-      setUserData((prevData) => ({
-        ...prevData,
-        name: newName,
-        profilePicture: newProfilePic,
-      }));
-      localStorage.setItem("userName", newName);
-      localStorage.setItem("userProfilePicture", newProfilePic);
+      updateUserData(newName, newProfilePic);
     }
     setShowEditModal(false);
   };

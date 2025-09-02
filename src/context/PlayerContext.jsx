@@ -50,6 +50,15 @@ const PlayerContextProvider = (props) => {
     profilePicture: initialProfilePicture,
   });
 
+  // Premium and discount state
+  const [isPremium, setIsPremium] = useState(
+    localStorage.getItem("isPremium") === "true"
+  );
+  const [appliedDiscount, setAppliedDiscount] = useState(
+    JSON.parse(localStorage.getItem("appliedDiscount")) || null
+  );
+  const [discountCode, setDiscountCode] = useState("");
+
   // Effect to load saved time when audio is ready
   useEffect(() => {
     const savedTime = localStorage.getItem("lastPlayedSongTime");
